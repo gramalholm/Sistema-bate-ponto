@@ -3,25 +3,30 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Koulen&display=swap" rel="stylesheet">
-    <title>Sistema de ponto</title>
-    <link rel="icon" href="./img/Logos/isotipo.png" type="image/png">
+    <title>Sistema de Ponto</title>
     <link rel="stylesheet" href="./css/style.css">
 </head>
 <body>
     <header class="header">
-        <img src="./img/Logos/logotipo.png" alt="Logo" class="header-img">
+        <a class="button" id="botao-login" href="loginadm.html">ENTRAR COMO Administrador</a>
     </header>
     <main class="login-bg">
         <div class="login-container">
-            <h1>Login</h1>
-            <input class="login-input" type="text" placeholder="Usuário">
-            <br></br>
-            <input class="login-input" type="password" placeholder="Senha">
-            <br></br>
-            <Button class="button">Enviar</Button>
+            <h1>DIGITE SEU CÓDIGO</h1>
+            <input 
+            id="codigo"
+            class="login-input"
+            type="password"
+            placeholder="Apenas Números"
+            >
+            <br>
+            <br>
+            <button class="button">ENVIAR</button>
+            <br>
+            <div id="div-check">
+                <input type="radio" name="check" id="check-in">Check-in
+                <input type="radio" name="check" id="check-out">Check-out
+            </div>
         </div>
     </main>
 </body>
