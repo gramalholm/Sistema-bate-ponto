@@ -1,0 +1,8 @@
+@import "./Global/global.css";
+@import "./Global/header.css";
+
+@import "./Comuns/componentes.css";
+@import "./Comuns/cores.css";
+
+@import "./Login/login.css";
+@import "./index/index.css";
