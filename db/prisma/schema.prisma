@@ -1,0 +1,41 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
+// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mongodb"
+  url      = env("DATABASE_URL")
+}
+
+model Funcionario {
+  id      String   @id @default(auto()) @map("_id") @db.ObjectId
+  name    String
+  cargo   String
+  turno   String
+  Hora_chegada   String
+  Hora_saida   String
+  Hora_totais String
+}
+
+
+model ponto {
+  Codigo      String   @id @default(auto()) @map("_id") @db.ObjectId
+  Tipo    String
+  Hora   String
+  Data   String
+  Dia    String
+}
+
+model registro {
+  Ponto_Codigo      String   @id @default(auto()) @map("_id") @db.ObjectId
+  Funcionario_ID    String
+  Data   String
+}
+
+#npx prisma studio
