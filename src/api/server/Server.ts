@@ -1,6 +1,6 @@
 //Script de configuração do servidor usando express.
 import express, {Request, Response} from 'express';
-import { funcRouter } from '../routes/funcRoutes';
+import { funcRouter } from '../routes/Routes';
 import { adminRouter } from '../routes/adminRoutes';
 import path from 'path';
 
