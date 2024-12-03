@@ -1,0 +1,38 @@
+header a {
+    display: inline-block; /* Mantém o comportamento de bloco para a imagem */
+    text-decoration: none; /* Remove sublinhado */
+}
+  
+header a img {
+    width: 100%; /* Mantém o tamanho original da imagem */
+    height: auto; /* Proporções corretas */
+    max-width: 150px; /* Ajuste conforme necessário */
+}
+
+.button{
+    display: inline-block;
+    padding: 15px 0px;
+    border:none;
+    outline: none;
+    width: 100%;
+    border-radius: 10px;
+    color: var(--cor-2);
+    text-transform: uppercase;
+    font-family: 'Koulen', sans-serif;
+}
+
+.enviar{
+    background-color: var(--cor-0);
+    font-size: 15px;
+}
+
+.button:hover{
+    background-color: var(--cor-3);
+    cursor: pointer;
+}
+
+.button-img {
+    width: 50%;
+    height: auto;
+    padding-left: 20px;
+}
