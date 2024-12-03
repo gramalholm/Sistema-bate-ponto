@@ -10,11 +10,10 @@ import express, {Request, Response} from 'express';
 const adminRouter = Router();
 
 adminRouter.get('/', (req: Request, res: Response) => {
-
+    res.sendFile('teste.html', {root: 'src'});
 });
 
-adminRouter.post('/',
-    (req: Request, res: Response) =>{
+adminRouter.post('/', (req: Request, res: Response) =>{
 
 })
 
