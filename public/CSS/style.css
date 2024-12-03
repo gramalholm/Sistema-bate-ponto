@@ -6,3 +6,7 @@
 
 @import "./Login/login.css";
 @import "./index/index.css";
+
+@import "./Funcionarios/funcionarios.css";
+
+@import "./Admin/admin.css";
