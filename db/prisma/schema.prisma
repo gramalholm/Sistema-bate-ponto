@@ -38,4 +38,3 @@ model registro {
   Data   String
 }
 
-#npx prisma studio

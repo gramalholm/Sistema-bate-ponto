@@ -8,7 +8,7 @@ checkButton.addEventListener('click', function() {
     funcContainer.style.pointerEvents = 'none';
 });
 
-enviarCheckButton.addEventListener('click', function() {
+enviarCheckButton.addEventListener('click', (e) => {
     funcContainerEx.style.display = 'none';
     funcContainer.style.pointerEvents = 'auto';
 });

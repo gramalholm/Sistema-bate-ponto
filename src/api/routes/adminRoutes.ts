@@ -1,5 +1,6 @@
 import { response, Router } from "express";
 import express, {Request, Response} from 'express';
+import { adminController } from "../controllers/adminController";
 
 /* A fazer:
 1) Criar os controladores e os middlewares.
