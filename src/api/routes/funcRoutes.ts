@@ -5,5 +5,6 @@ const funcRouter = Router();
 
 funcRouter.get('/func', (req: Request, res: Response) => {
     
-
 })
+
+export { funcRouter }; 
