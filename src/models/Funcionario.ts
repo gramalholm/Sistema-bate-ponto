@@ -1,8 +1,9 @@
-export interface funcinario{
-    nome: string;
+export interface Funcionario{
+    name: string;
     id: string;
-    horario_entrada: Date;
-    horario_saida: Date;
+    horario_entrada: string;
+    horario_saida: string;
+    horas_totais: string;
     cargo: string;
     turno: string;
 }
