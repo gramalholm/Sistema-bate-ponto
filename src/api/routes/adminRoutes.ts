@@ -1,5 +1,6 @@
 import { response, Router } from "express";
 import express, {Request, Response} from 'express';
+import { adminController } from "../controllers/adminController";
 
 /* A fazer:
 1) Criar os controladores e os middlewares.
@@ -9,12 +10,11 @@ import express, {Request, Response} from 'express';
 */
 const adminRouter = Router();
 
-adminRouter.get('/', (req: Request, res: Response) => {
-
+adminRouter.get('/', async (req: Request, res: Response) => {
+    res.sendFile('teste.html', {root: 'src'});
 });
 
-adminRouter.post('/',
-    (req: Request, res: Response) =>{
+adminRouter.post('/',  async  (req: Request, res: Response) =>{
 
 })
 

@@ -37,3 +37,4 @@ model registro {
   Funcionario_ID    String
   Data   String
 }
+
