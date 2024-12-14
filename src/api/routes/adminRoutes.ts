@@ -10,13 +10,14 @@ import { adminController } from "../controllers/adminController";
 */
 const adminRouter = Router();
 
-adminRouter.get('/', async (req: Request, res: Response) => {
+adminRouter.get('/admin', async (req: Request, res: Response) => {
     res.sendFile('teste.html', {root: 'src'});
 });
 
-adminRouter.post('/',  async  (req: Request, res: Response) =>{
+adminRouter.post('/admin',  async  (req: Request, res: Response) =>{
 
 })
 
+adminRouter.delete('/admin', )
 
 export { adminRouter };
