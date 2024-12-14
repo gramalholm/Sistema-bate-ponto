@@ -16,7 +16,7 @@
 }
 
 .func-container-ex{
-    display: none;
+    display: block;
     position: absolute;
     background: var(--cor-1);
     position: absolute;
