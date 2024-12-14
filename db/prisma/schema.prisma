@@ -18,24 +18,24 @@ model Funcionario {
   name         String
   cargo        String
   turno        String
-  Hora_chegada String
-  Hora_saida   String
-  Hora_totais  String
+  Hora_chegada String?
+  Hora_saida   String?
+  Horas_totais   String
   registros    Registro[]
 }
 
 model Ponto {
   codigo       String      @id @default(auto()) @map("_id") @db.ObjectId
   tipo         String
-  horario      DateTime
-  registros    Registro[]  @relation("PontoToRegistro")
+  horario      String
+  registros    Registro[]
 }
 
 model Registro {
   id             String      @id @default(auto()) @map("_id") @db.ObjectId
   funcionario    Funcionario @relation(fields: [funcionarioId], references: [id])
-  ponto          Ponto       @relation("PontoToRegistro", fields: [pontoCod], references: [codigo])
+  ponto          Ponto       @relation(fields: [pontoCod], references: [codigo])
   funcionarioId  String      @db.ObjectId
   pontoCod       String      @db.ObjectId
-  data           DateTime
+  data           String
 }
