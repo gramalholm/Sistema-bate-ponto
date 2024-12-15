@@ -18,6 +18,7 @@ model Funcionario {
   name         String
   cargo        String
   turno        String
+  email        String
   Hora_chegada String?
   Hora_saida   String?
   Horas_totais   String
