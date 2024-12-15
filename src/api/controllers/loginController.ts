@@ -1,4 +1,4 @@
-import { findLogin } from "../services/loginServices";
+import { getFuncbyid } from "../services/funcServices";
 import { Request,Response } from "express";
 
 export class loginController {
@@ -10,10 +10,10 @@ export class loginController {
                 return res.status(400).json({ error: 'Usuário e senha são obrigatórios.' });
             }
 
-            const login =  await findLogin(user, password);
+            const login =  await getFuncbyid(user, password);
 
             if(!login){
-                return res.status(401).json({ error: 'Usuário não encontrado.' });
+                return res.status(404).json({ error: 'Usuário não encontrado.' });
             }
 
             if(login.cargo === "RH"){
@@ -25,8 +25,6 @@ export class loginController {
         }catch(error){
             return res.status(500).json({ error: 'Erro interno do servidor.' })
         }
-
     }   
 
-    
 }

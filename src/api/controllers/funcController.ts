@@ -25,7 +25,5 @@ export class funcController{
 
     public static async checkInOut(req: Request, res: Response):Promise<Response>{
         
-    
-    
     }
 }

@@ -14,10 +14,8 @@ adminRouter.get('/admin', async (req: Request, res: Response) => {
     res.sendFile('teste.html', {root: 'src'});
 });
 
-adminRouter.post('/admin',  async  (req: Request, res: Response) =>{
+adminRouter.post('/admin',  adminController.createFunc);
 
-})
-
-adminRouter.delete('/admin', )
+adminRouter.delete('/admin', adminController.removeFunc);
 
 export { adminRouter };
