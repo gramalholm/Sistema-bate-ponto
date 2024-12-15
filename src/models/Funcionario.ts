@@ -1,6 +1,5 @@
 export interface Funcionario{
     name: string;
-    id: string;
     email: string;
     senha: string;
     Hora_entrada?: string | null;

@@ -1,25 +1,23 @@
-import { Prisma, PrismaClient } from "@prisma/client";
+import { PrismaClient } from "@prisma/client";
 import { Funcionario} from "../../models/Funcionario";
 import { NotFoundException } from "../Exceptions/NotFoundException";
 import { Exception } from "../Exceptions/Exception";
-import { FuncionarioUpdatePswd } from "../../models/FuncionarioUpdatePswd";
-import { FuncionarioCreate } from "../../models/FuncionariosCreate";
-import { schemaFuncionarioCreate } from "../../validação";
-
+import { FuncionarioUpdatePswd } from "../../models/Interfaces/FuncionarioUpdatePswd";
+import { FuncionarioCreate } from "../../models/Interfaces/FuncionariosCreate";
 
 //update senha funcionario
-export const changePassword = async(id:string, body: FuncionarioUpdatePswd):Promise<Funcionario> =>{
+export const changePassword = async(email:string, body: FuncionarioUpdatePswd):Promise<Funcionario> =>{
     const prisma = new PrismaClient();
-    const funcionario = await getFuncbyid(id);
+    const funcionario = await getFuncbyid(email);
 
-    if(!body.senha){
+    if(!email || !body.senha){
         throw new Exception('senha não informada', 404);
     }
 
     const updateFuncionario = await prisma.funcionario.update({
-        where:{
-            id: id
-        },
+       where:{
+              id: email
+       },
         data:{
             senha: body.senha
         }
@@ -47,44 +45,42 @@ export const getAllFuncionarios = async(dataInicio: Date, dataFinal: Date):Promi
 }
 */
 //getFuncbyid
-export const getFuncbyid = async(id: string):Promise<Funcionario> =>{
+export const getFuncbyid = async(email: string):Promise<Funcionario> =>{
 
     const prisma = new PrismaClient();
     try {
-        if (!id) {
-            throw new Exception('id não informado', 404);
+        if (!email) {
+            throw new Exception('email não informado', 404);
         }
 
         // Aguarde a execução da consulta
         const funcionario = await prisma.funcionario.findUnique({
             where: {
-                id,
+                id: email,
             }
         });
 
         if (!funcionario) {
             throw new NotFoundException('funcionario');
         }
-
-        return funcionario;  // Retorna o funcionário encontrado
+        return funcionario;
     } catch (error) {
         throw error;
     } finally {
-        // Certifique-se de desconectar o Prisma Client após a operação
         await prisma.$disconnect();
     }
 }
 
 //delete funcionario
-export const deleteFunc = async(id: string):Promise<Funcionario> =>{
+export const deleteFunc = async(email: string):Promise<Funcionario> =>{
     const prisma = new PrismaClient();
-    if(!id){
+    if(!email){
         throw new Exception('id não informado', 404);
     }
 
     const funcionario = prisma.funcionario.findUnique({
         where:{
-            id,
+            id: email
         }
     })
 
@@ -94,7 +90,7 @@ export const deleteFunc = async(id: string):Promise<Funcionario> =>{
 
     const deleteFuncionario = await prisma.funcionario.delete({
         where:{
-            id: id
+            id: email
         }
     })
     if(!deleteFuncionario){
@@ -110,16 +106,22 @@ export const createFunc = async(body: FuncionarioCreate):Promise<Funcionario> =>
     console.log("PrismaClient instance created");
     console.log(body);
     try {
+
+        const funcionarioEmail = await getFuncbyid(body.email);
+        if(funcionarioEmail){
+            throw new Exception('email já cadastrado', 404);
+        }
+
         const funcionario = await prisma.funcionario.create({
             data: {
-                name: body.name, // Ajuste para corresponder ao campo 'nome' do body
+                name: body.name,
                 senha: body.senha,
                 email: body.email,
                 cargo: body.cargo,
                 turno: body.turno,
-                Hora_chegada: body.Hora_chegada, // Certifique-se de que este campo está presente no body
-                Hora_saida: body.Hora_saida, // Certifique-se de que este campo está presente no body
-                Horas_totais: body.Horas_totais // Certifique-se de que este campo está presente e é uma string
+                Hora_chegada: body.Hora_chegada, 
+                Hora_saida: body.Hora_saida, 
+                Horas_totais: body.Horas_totais 
             }
         });
 
@@ -127,7 +129,6 @@ export const createFunc = async(body: FuncionarioCreate):Promise<Funcionario> =>
             throw new Error("Erro ao criar o funcionário");
         }
 
-        console.log("Funcionario created:", funcionario);
         return funcionario;
     } catch (error) {
         console.error("Error creating funcionario:", error);

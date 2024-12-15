@@ -1,7 +1,9 @@
+import { Funcionario } from "./Funcionario";
+
 export interface ponto{
     codigo: string;
     tipo: string;
-    hora: string;
-    data: string;
-    dia: string;
+    horario: Date;
+    funcionario: Funcionario;
+    funcionarioId: string;
 }
