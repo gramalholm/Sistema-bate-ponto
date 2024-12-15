@@ -6,17 +6,10 @@ import { adminRouter } from '../routes/adminRoutes';
 
 // instanciando o servidor
 const app = express();
-
+app.use(express.static('public'));
 app.use(express.json());
 
-app.use(express.static('public'));
-
 app.use('/', loginRouter);
-
 app.use('/admin', adminRouter);
-
 app.use('/func', funcRouter)
-
-
-
 export { app };

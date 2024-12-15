@@ -2,91 +2,94 @@ import { Prisma, PrismaClient } from "@prisma/client";
 import { Funcionario} from "../../models/Funcionario";
 import { NotFoundException } from "../Exceptions/NotFoundException";
 import { Exception } from "../Exceptions/Exception";
+import { FuncionarioUpdatePswd } from "../../models/FuncionarioUpdatePswd";
+import { FuncionarioCreate } from "../../models/FuncionariosCreate";
+import { schemaFuncionarioCreate } from "../../validação";
 
 
 //update senha funcionario
-export const changePassword = async(name: string, id: string, newId: string):Promise<Funcionario> =>{
+export const changePassword = async(id:string, body: FuncionarioUpdatePswd):Promise<Funcionario> =>{
     const prisma = new PrismaClient();
+    const funcionario = await getFuncbyid(id);
 
-    if(!name || !id){
-        throw new Exception("Usuário ou senha não informados", 404);
+    if(!body.senha){
+        throw new Exception('senha não informada', 404);
     }
 
-    const funcionario = await prisma.funcionario.update({
+    const updateFuncionario = await prisma.funcionario.update({
         where:{
-            name: name,
-            id: id,
+            id: id
         },
         data:{
-            id: newId,
+            senha: body.senha
         }
     })
-    
-    if(!funcionario){
-        throw new NotFoundException('funcionario');
-    }
-
     return funcionario;
 }
 
 //getall funcionarios
+/*
 export const getAllFuncionarios = async(dataInicio: Date, dataFinal: Date):Promise<Funcionario[]> =>{
     const prisma = new PrismaClient();
 
-    const funcionarios = await prisma.Funcionario.findMany({
+    const funcionarios = await prisma.funcionario.findMany({
         where:{
             createdAt:{
                 gte: dataInicio,
                 lte: dataFinal
             }
         }   
-}   );
-
+    });
     if(funcionarios?.length === 0){
-        throw new NotFoundException('funcionarios');
+         throw new NotFoundException('funcionarios');
     }
-
     return funcionarios;
 }
-
+*/
 //getFuncbyid
-export const getFuncbyid = async(user: string, id: string):Promise<Funcionario> =>{
+export const getFuncbyid = async(id: string):Promise<Funcionario> =>{
+
     const prisma = new PrismaClient();
-
-    
-    if(!id){
-        throw new Exception('id não informado', 404);
-    }
-
-    const funcionario = prisma.Funcionario.findUnique({
-        where:{
-            name: user,
-            id,
+    try {
+        if (!id) {
+            throw new Exception('id não informado', 404);
         }
-    })
 
-    if(!funcionario){
-        throw new NotFoundException('funcionario');
+        // Aguarde a execução da consulta
+        const funcionario = await prisma.funcionario.findUnique({
+            where: {
+                id,
+            }
+        });
+
+        if (!funcionario) {
+            throw new NotFoundException('funcionario');
+        }
+
+        return funcionario;  // Retorna o funcionário encontrado
+    } catch (error) {
+        throw error;
+    } finally {
+        // Certifique-se de desconectar o Prisma Client após a operação
+        await prisma.$disconnect();
     }
-    return funcionario;
 }
 
 //delete funcionario
 export const deleteFunc = async(id: string):Promise<Funcionario> =>{
     const prisma = new PrismaClient();
-
     if(!id){
         throw new Exception('id não informado', 404);
     }
 
-    const funcionario = prisma.Funcionario.findUnique({
+    const funcionario = prisma.funcionario.findUnique({
         where:{
             id,
         }
     })
 
     if(!funcionario){
-        throw new NotFoundException('funcionario');
+         throw new NotFoundException('funcionario');
     }
 
     const deleteFuncionario = await prisma.funcionario.delete({
@@ -94,37 +97,50 @@ export const deleteFunc = async(id: string):Promise<Funcionario> =>{
             id: id
         }
     })
-
     if(!deleteFuncionario){
-        throw new NotFoundException('funcionario');
+         throw new NotFoundException('funcionario');
     }
-
     return deleteFuncionario;
 }
 
 //create funcionario
-export const createFunc = async(name: string, id: string, cargo: string, turno: string, horario_chegada: string, horario_saida: string, horas_totais: string):Promise<Funcionario> =>{
+export const createFunc = async(body: FuncionarioCreate):Promise<Funcionario> => {
+    console.log("blablabla");
     const prisma = new PrismaClient();
+    console.log("PrismaClient instance created");
+    console.log(body);
+    try {
+        const funcionario = await prisma.funcionario.create({
+            data: {
+                name: body.name, // Ajuste para corresponder ao campo 'nome' do body
+                senha: body.senha,
+                email: body.email,
+                cargo: body.cargo,
+                turno: body.turno,
+                Hora_chegada: body.Hora_chegada, // Certifique-se de que este campo está presente no body
+                Hora_saida: body.Hora_saida, // Certifique-se de que este campo está presente no body
+                Horas_totais: body.Horas_totais // Certifique-se de que este campo está presente e é uma string
+            }
+        });
 
-    if(!name || !id || !cargo || !turno || !horario_chegada || !horario_saida || !horas_totais){
-        throw new Exception('Todos os campos são obrigatórios', 404);
-    }
-    const funcionario = await prisma.Funcionario.create({
-        data:{
-            name: name,
-            id: id,
-            cargo: cargo,
-            turno: turno,
-            horario_chegada: horario_chegada,
-            horario_saida: horario_saida,
-            horas_totais: horas_totais
+        if (!funcionario) {
+            throw new Error("Erro ao criar o funcionário");
         }
-    })
-    return funcionario;
+
+        console.log("Funcionario created:", funcionario);
+        return funcionario;
+    } catch (error) {
+        console.error("Error creating funcionario:", error);
+        throw error;
+    } finally {
+        await prisma.$disconnect();
+        console.log("PrismaClient disconnected");
+    }
 }
 
-//update funcionario checkIn
 
+//update funcionario checkIn
+/*
 const updateCheckIn = async(id:string, checkIn: string):Promise<Funcionario> =>{
     const prisma = PrismaClient();
 
@@ -139,3 +155,4 @@ const updateCheckIn = async(id:string, checkIn: string):Promise<Funcionario> =>{
         }
     })
 }
+*/

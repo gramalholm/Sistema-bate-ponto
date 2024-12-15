@@ -1,9 +1,11 @@
 export interface Funcionario{
     name: string;
     id: string;
-    horario_entrada: string;
-    horario_saida: string;
-    horas_totais: string;
+    email: string;
+    senha: string;
+    Hora_entrada?: string | null;
+    Hora_saida?: string | null;
+    Horas_totais: string;
     cargo: string;
     turno: string;
 }

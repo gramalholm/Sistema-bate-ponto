@@ -8,8 +8,6 @@ funcRouter.get('/func', (req: Request, res: Response) => {
     res.sendFile('func.html', {root: 'src'});
 })
 
-
-
 funcRouter.post('/func/:id', funcController.changePassword);
 
 export { funcRouter }; 
