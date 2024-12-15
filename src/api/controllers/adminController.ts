@@ -31,6 +31,27 @@ export class adminController{
         }
     }
 
+    public static async createCSV(req: Request, res: Response):Promise<Response>{
+        const createCsvWriter = require('csv-writer').createObjectCsvWriter;
+
+        const csvWriter = createCsvWriter({
+            path: 'relatiorio.csv',
+            header:[
+                {id: 'data', title: 'Data'},
+                {id: 'name', title:'Funcionario'},
+                {id: 'id', title: 'Código do Funcionário'},
+                {id: 'horario_entrada', title: 'Horário de Entrada'},
+                {id: 'horario_saida', title: 'Horário de Saída'},
+                {id: 'numeros_atrasos', title: 'Número de Atrasos'},
+                {id: 'numeros_faltas', title: 'Falta'},
+            ]
+        });
+
+        const funcionarios =  this.getAllFuncs(req, res);
+        const records = funcionarios.map(funcionario => {
+
+    }
+
     public static async removeFunc(req: Request, res: Response):Promise<Response>{
         try{
             const { id } = req.body;
