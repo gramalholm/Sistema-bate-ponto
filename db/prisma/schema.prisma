@@ -15,6 +15,7 @@ datasource db {
 
 model Funcionario {
   id           String      @id @default(auto()) @map("_id") @db.ObjectId
+  senha        String
   name         String
   cargo        String
   turno        String
