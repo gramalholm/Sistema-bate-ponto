@@ -3,32 +3,52 @@ import { deleteFunc, createFunc } from "../services/funcServices";
 import { FuncionarioCreate } from "../../models/Interfaces/FuncionariosCreate";
 import * as yup from 'yup';
 
+const bodyValidation: yup.Schema<FuncionarioCreate> = yup.object().shape({
+    name: yup.string().required(),
+    email: yup.string().required(),
+    senha: yup.string().required().min(6),
+    cargo: yup.string().required(),
+    turno: yup.string().required(),
+    Hora_chegada: yup.string(),
+    Hora_saida: yup.string(),
+    Horas_totais: yup.string().required(),
+});
+
+
 export class adminController{
 
     public static async createFunc(req: Request<undefined, undefined, FuncionarioCreate>, res: Response):Promise<Response>{
         try{
-            const schema = yup.object().shape({
-                name: yup.string().required(),
-                email: yup.string().required(),
-                senha: yup.string().required().min(6),
-                cargo: yup.string().required(),
-                turno: yup.string().required(),
-                Hora_chegada: yup.string(),
-                Hora_saida: yup.string(),
-                Horas_totais: yup.number().required(),
-            });
-            
-            schema.validate(req.body, {abortEarly: false});
+            let validatedFuncionario: FuncionarioCreate | undefined;
 
-            const funcionario = await createFunc(req.body);
+            try{
+                validatedFuncionario = await bodyValidation.validate(req.body, {abortEarly: false});
+            }catch(error){
+                const yupError = error as yup.ValidationError;
+                const validationErrors: Record<string, string> = {};
+
+                yupError.inner.forEach((error) => {
+                    error.message
+                    if(!error.path) return;
+                    validationErrors[error.path] = error.message;
+                });
+
+                return res.status(404).json({
+                    errors:validationErrors,
+                });
+            }
+
+            const funcionario = await createFunc(validatedFuncionario);
         
             if(!funcionario){
                 return res.status(400).json({error: 'Erro ao criar o funcionário'});
             }
+
             return res.status(200).json({
             message: 'Funcionário criado com sucesso',
             funcionario,
-        });
+            });
+
         }catch(error){
             return res.status(500).json({ error: 'Erro ao criar o funcionário' });
         }
@@ -76,19 +96,19 @@ export class adminController{
 */
     public static async removeFunc(req: Request, res: Response):Promise<Response>{
         try{
-            const { id } = req.body.id;
+            const { email} = req.body.email;
 
-            if(!id){
-                return res.status(404).json({error: 'id é obrigatório'});
+            if(!email){
+                return res.status(404).json({error: 'email é obrigatório'});
             }
             
-            const hasDeleted = deleteFunc(id);
+            const hasDeleted = deleteFunc(email);
 
             if(!hasDeleted){
                 return res.status(404).json({error: 'funcionario não encontrado'});
             }
-
             return res.status(200).json("Funcionário removido com sucesso");
+
         }catch(error){
             return res.status(500).json({ error: 'Erro ao remover o funcionário' });
         }
