@@ -12,27 +12,30 @@ model Funcionario {
   id           String      @id @default(auto()) @map("_id") @db.ObjectId
   senha        String
   name         String
+  email        String
   cargo        String
   turno        String
-  email        String
   Hora_chegada String?
   Hora_saida   String?
-  Horas_totais   String
-  registros    Registro[]
+  Horas_totais String
+  registros    Registro[]  // Relação com registros
+  pontos       Ponto[]     // Relação com pontos (bidirecional)
 }
 
 model Ponto {
-  codigo       String      @id @default(auto()) @map("_id") @db.ObjectId
-  tipo         String
-  horario      String
-  registros    Registro[]
+  codigo         String      @id @default(auto()) @map("_id") @db.ObjectId
+  tipo           String
+  horario        DateTime
+  funcionario    Funcionario @relation(fields: [funcionarioId], references: [id])
+  funcionarioId  String      @db.ObjectId
+  registros      Registro[]  @relation("PontoToRegistro")
 }
 
 model Registro {
   id             String      @id @default(auto()) @map("_id") @db.ObjectId
   funcionario    Funcionario @relation(fields: [funcionarioId], references: [id])
-  ponto          Ponto       @relation(fields: [pontoCod], references: [codigo])
+  ponto          Ponto       @relation("PontoToRegistro", fields: [pontoCod], references: [codigo])
   funcionarioId  String      @db.ObjectId
   pontoCod       String      @db.ObjectId
-  data           String
+  data           DateTime
 }

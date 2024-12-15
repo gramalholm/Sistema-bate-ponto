@@ -2,8 +2,10 @@
 import { Prisma, PrismaClient } from "@prisma/client";
 import { Funcionario} from "../../models/Funcionario";
 
+
 import { NotFoundException } from "../Exceptions/NotFoundException";
 import { Exception } from "../Exceptions/Exception";
+
 
 
 //update senha funcionario
