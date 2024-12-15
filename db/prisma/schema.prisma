@@ -9,27 +9,30 @@ datasource db {
 }
 
 model Funcionario {
-  id      String   @id @default(auto()) @map("_id") @db.ObjectId
-  name    String
-  cargo   String
-  turno   String
-  Hora_chegada   String
-  Hora_saida   String
-  Hora_totais String
+  id           String      @id @default(auto()) @map("_id") @db.ObjectId
+  senha        String
+  name         String
+  cargo        String
+  turno        String
+  email        String
+  Hora_chegada String?
+  Hora_saida   String?
+  Horas_totais   String
+  registros    Registro[]
 }
 
-
-model ponto {
-  Codigo      String   @id @default(auto()) @map("_id") @db.ObjectId
-  Tipo    String
-  Hora   String
-  Data   String
-  Dia    String
+model Ponto {
+  codigo       String      @id @default(auto()) @map("_id") @db.ObjectId
+  tipo         String
+  horario      String
+  registros    Registro[]
 }
 
-model registro {
-  Ponto_Codigo      String   @id @default(auto()) @map("_id") @db.ObjectId
-  Funcionario_ID    String
-  Data   String
+model Registro {
+  id             String      @id @default(auto()) @map("_id") @db.ObjectId
+  funcionario    Funcionario @relation(fields: [funcionarioId], references: [id])
+  ponto          Ponto       @relation(fields: [pontoCod], references: [codigo])
+  funcionarioId  String      @db.ObjectId
+  pontoCod       String      @db.ObjectId
+  data           String
 }
-

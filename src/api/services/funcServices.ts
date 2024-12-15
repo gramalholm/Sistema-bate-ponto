@@ -1,5 +1,7 @@
+
 import { Prisma, PrismaClient } from "@prisma/client";
 import { Funcionario} from "../../models/Funcionario";
+
 import { NotFoundException } from "../Exceptions/NotFoundException";
 import { Exception } from "../Exceptions/Exception";
 
@@ -106,7 +108,7 @@ export const deleteFunc = async(id: string):Promise<Funcionario> =>{
 export const createFunc = async(name: string, id: string, cargo: string, turno: string, horario_chegada: string, horario_saida: string, horas_totais: string):Promise<Funcionario> =>{
     const prisma = new PrismaClient();
 
-    if(!name || !id || !cargo || !turno || !horario_chegada || !horario_saida || !horas_totais){
+    if(!name  !cargo  !horario_chegada  !horas_totais){
         throw new Exception('Todos os campos são obrigatórios', 404);
     }
     const funcionario = await prisma.Funcionario.create({
@@ -124,7 +126,6 @@ export const createFunc = async(name: string, id: string, cargo: string, turno: 
 }
 
 //update funcionario checkIn
-
 const updateCheckIn = async(id:string, checkIn: string):Promise<Funcionario> =>{
     const prisma = PrismaClient();
 
@@ -138,4 +139,5 @@ const updateCheckIn = async(id:string, checkIn: string):Promise<Funcionario> =>{
             
         }
     })
+
 }
