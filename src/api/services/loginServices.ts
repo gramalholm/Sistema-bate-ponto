@@ -1,14 +1,14 @@
 import { Prisma, PrismaClient } from "@prisma/client";
-import { Funcionario } from "../../models/Funcionario";
+import { funcionario } from "../../models/Funcionario";
 
-export const findLogin = async (user: string, password: string):Promise<Funcionario> =>{
+export const findLogin = async (user: string, password: string):Promise<funcionario> =>{
     
     const prisma = new PrismaClient();
     
-    const login = await prisma.Funcionario.findUnique({
+    const login = await prisma.funcionario.findUnique({
         where: {
-            name: user,
-            id: password,
+            email: user,
+            senha: password,
         }
     });
     if(!login){

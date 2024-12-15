@@ -24,6 +24,6 @@ export class funcController{
     }
 
     public static async checkInOut(req: Request, res: Response):Promise<Response>{
-        
+        return res.status(500).json({ error: 'Erro interno do servidor.' });
     }
 }
