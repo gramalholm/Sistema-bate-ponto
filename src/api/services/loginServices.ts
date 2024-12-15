@@ -1,7 +1,7 @@
 import { Prisma, PrismaClient } from "@prisma/client";
-import { funcionario } from "../../models/Funcionario";
+import { Funcionario } from "../../models/Funcionario";
 
-export const findFunc = async():Promise<funcionario[]> =>{
+export const findFunc = async():Promise<Funcionario[]> =>{
     
     const prisma = new PrismaClient();
     
