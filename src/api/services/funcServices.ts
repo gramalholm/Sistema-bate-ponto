@@ -6,24 +6,6 @@ import express from 'express'
 const app = express()
 const prisma = new PrismaClient();
 
-app.use(express.json())
-export const CreateFunc = async():Promise<void> =>{
-    app.post('/funcionario', async (req, res) =>{
-        await prisma.funcionario.create({
-            data: {
-                name: req.body.name,
-                cargo: req.body.cargo,
-                turno: req.body.turno,
-                email: req.body.email,
-                Hora_chegada: req.body.Hora_chegada,
-                Hora_saida: req.body.Hora_saida,
-                Horas_totais: req.body.Horas_totais
-            }
-        })
-        return res.send('Usuario criado')
-    })  
-}
-
 export const checkFuncionarioExistsByName = async (name: string): Promise<boolean> => {
     try {
       // Consulta no banco de dados para verificar se o funcionário existe
