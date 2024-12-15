@@ -1,6 +1,6 @@
 import { Prisma, PrismaClient } from "@prisma/client";
 import { Funcionario} from "../../models/Funcionario";
-import { Exception, NotFoundException } from "../Exceptions";
+import { NotFoundException } from "../Exceptions/NotFoundException";
 
 export const checkInOut = async(data: string):Promise<> => {
     

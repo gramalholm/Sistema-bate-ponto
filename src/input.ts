@@ -10,7 +10,7 @@ formElement?.addEventListener("button", async (e) =>{
     e.preventDefault();
     const user = userInput.value;
     const password = passwordInput.value;
-    await fetch("/input.js").then((response) => {
+    await fetch("/index.ts").then((response) => {
         console.log("entrou", response);
         return response;
     }).catch((err) => {
