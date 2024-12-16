@@ -8,27 +8,27 @@
     <link href="https://fonts.googleapis.com/css2?family=Koulen&display=swap" rel="stylesheet">
     <title>Sistema de ponto</title>
     <link rel="icon" href="../public/img/Logos/isotipo.png" type="image/png">
-    <link rel="stylesheet" href="../public/CSS/style.css"> 
+    <link rel="stylesheet" href="../../public/CSS/style.css"> 
 </head>
 <body>
     <header class="header">
         <a href="./index.html">
-            <img src="../public/img/Logos/logotipo.png" alt="Logo" class="header-img">
+            <img src="../../public/img/Logos/logotipo.png" alt="Logo" class="header-img">
         </a>
     </header>
     <main>
-        <div class="func-container">
+        <div class="func-container container">
                 <button class="func button" id="check">
-                    <img class="button-img" src="../public/img/Icones/checkin.png" alt="Check in">
+                    <img class="button-img func-tamanho-img" src="../../public/img/Icones/checkin.png" alt="Check in">
                     <h1>check in</h1>
                 </button>
                 <button class="func button" id="senha">
-                    <img class="button-img" src="../public/img/Icones/senha.png" alt="Alterar senha">
+                    <img class="button-img func-tamanho-img" src="../../public/img/Icones/senha.png" alt="Alterar senha">
                     <h1>Alterar senha</h1>
                 </button>
         </div>
        
-        <div class="func-container-ex">
+        <div class="container-ex">
             <h1>ALterando a senha</h1>
             <input class="login-input" type="password" placeholder="Nova Senha">
             <br></br>
@@ -36,8 +36,22 @@
             <br></br>
             <a class="enviar button" href="./func.html" id="check-enviar">Enviar</a>
         </div>
+
+        <div class="container-ex">
+            <h1>Realizando o check in</h1>
+            <div class="func-radio">
+                <input type="radio" name="check" value="1" id="checkin">
+                <label for="checkin">check in</label>
+            </div>
+            <div class="func-radio">
+                <input type="radio" name="check" value="0" id="checkout">
+                <label for="checkout">check out</label>
+            </div>
+            <br></br>
+            <a class="enviar button" href="./func.html" id="check-enviar">Enviar</a>
+        </div>
     </main>
-    <script src="../public/TS/func.js"></script>
+    <script type="module" src="../TS/func.js"></script>
 </body>
 </html>
 

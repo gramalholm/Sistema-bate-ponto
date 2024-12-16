@@ -1,15 +1,19 @@
+import { toggleContainer, resetContainers } from './Comuns/uiHandler.js';
+
 const checkButton = document.getElementById('check');
 const senhaButton = document.getElementById('senha');
 const enviarCheckButton = document.getElementById('check-enviar');
-const funcContainerEx = document.querySelector('.func-container-ex');
+const funcContainerEx = document.querySelectorAll('.container-ex');
 const funcContainer = document.querySelector('.func-container');
 
-checkButton.addEventListener('click', function() {
-    funcContainerEx.style.display = 'block';
-    funcContainer.style.pointerEvents = 'none';
+checkButton.addEventListener('click', () => {
+    toggleContainer(funcContainerEx[1], funcContainer);
 });
 
-enviarCheckButton.addEventListener('click', (e) => {
-    funcContainerEx.style.display = 'none';
-    funcContainer.style.pointerEvents = 'auto';
+senhaButton.addEventListener('click', () => {
+    toggleContainer(funcContainerEx[0], funcContainer);
+});
+
+enviarCheckButton.addEventListener('click', () => {
+    resetContainers(funcContainerEx, funcContainer);
 });
