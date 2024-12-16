@@ -5,7 +5,7 @@ export const findLogin = async (user: string, password: string):Promise<Funciona
     
     const prisma = new PrismaClient();
     
-    const login = await prisma.Funcionario.findUnique({
+    const login = await prisma.funcionario.findUnique({
         where: {
             name: user,
             id: password,

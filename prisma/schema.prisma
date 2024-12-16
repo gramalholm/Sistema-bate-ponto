@@ -1,0 +1,38 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mongodb"
+  url      = env("DATABASE_URL")
+}
+
+model Funcionario {
+  email        String      @id @map("_id") @unique
+  senha        String
+  name         String
+  cargo        String
+  Hora_chegada String?
+  Hora_saida   String?
+  Horas_totais String
+  registros    Registro[]
+  pontos       Ponto[]
+}
+
+model Ponto {
+  codigo            String      @id @default(auto()) @map("_id") @db.ObjectId
+  tipo              String
+  horario           DateTime    @default(now())
+  funcionario       Funcionario @relation(fields: [funcionarioId], references: [email])
+  funcionarioId     String
+  registros         Registro[]  @relation("PontoToRegistro")
+}
+
+model Registro {
+  id                String      @id @default(auto()) @map("_id") @db.ObjectId
+  funcionario       Funcionario @relation(fields: [funcionarioEmail], references: [email])
+  ponto             Ponto       @relation("PontoToRegistro", fields: [pontoCod], references: [codigo])
+  funcionarioEmail  String
+  pontoCod          String      @db.ObjectId
+  data              DateTime    @default(now())
+}
