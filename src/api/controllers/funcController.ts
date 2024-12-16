@@ -1,4 +1,4 @@
-export class funcController{
+/*export class funcController{
     public static async changePassword(req: Request, res: Response):Promise<Response>{
         try{
 
@@ -6,4 +6,4 @@ export class funcController{
 
         }
     }
-}
+}*/

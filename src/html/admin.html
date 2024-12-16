@@ -7,30 +7,109 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Koulen&display=swap" rel="stylesheet">
     <title>Sistema de ponto</title>
-    <link rel="icon" href="../public/img/Logos/isotipo.png" type="image/png">
-    <link rel="stylesheet" href="../public/CSS/style.css">
+    <link rel="icon" href="../../public/img/Logos/isotipo.png" type="image/png">
+    <link rel="stylesheet" href="../../public/CSS/style.css">
 </head>
 <body>
     <header class="header">
         <a href="./index.html">
-            <img src="../public/img/Logos/logotipo.png" alt="Logo" class="header-img">
+            <img src="../../public/img/Logos/logotipo.png" alt="Logo" class="header-img">
         </a>
     </header>
     <main>
-        <div class="admin-container">
-            <button class="admin button">
-                <img class="button-img" src="../public/img/Icones/removefunc.png" alt="Deletar funcionário">
+        <div class="admin-container container">
+            <button class="admin button" id="delfunc">
+                <img class="button-img admin-tamanho-img" src="../../public/img/Icones/removefunc.png" alt="Deletar funcionário">
                 <h1>Deletar funcionario</h1>
             </button>
-            <button class="admin button">
-                <img class="button-img" src="../public/img/Icones/editfunc.png" alt="Editar funcionário">
+            <button class="admin button" id="editfunc">
+                <img class="button-img admin-tamanho-img" src="../../public/img/Icones/editfunc.png" alt="Editar funcionário">
                 <h1>Editar funcionario</h1>
             </button>
-            <button class="admin button">
-                <img class="button-img" src="../public/img/Icones/addfunc.png" alt="Adicionar funcionário">
+            <button class="admin button" id="addfunc">
+                <img class="button-img admin-tamanho-img" src="../../public/img/Icones/addfunc.png" alt="Adicionar funcionário">
                 <h1>Adicionar funcionario</h1>
             </button>
+            <button class="admin button" id="relatorio">
+                <img class="button-img admin-tamanho-img" src="../../public/img/Icones/relatorio.png" alt="Gerar relatorio">
+                <h1>Gerar relatorio</h1>
+            </button>
+        </div>
+        <div class="container-ex">
+            <h1>Deletar funcionario</h1>
+            <input class="login-input" type="text" placeholder="Email do funcionario">
+            <br></br>
+            <button class="enviar button">Deletar</button>
+        </div>
+        <div class="container-ex">
+            <h1>Editar funcionario</h1>
+            <input class="login-input" type="text" placeholder="Email do funcionario">
+            <br></br>
+            <p>Marque o campo que deseja editar</p>
+            <div class="func-radio">
+                <input type="radio" name="campo" value="0" id="nome">
+                <label for="nome">Nome</label>
+            </div>
+            <div class="func-radio">
+                <input type="radio" name="campo" value="1" id="senha">
+                <label for="senha">Senha</label>
+            </div>
+            <div class="func-radio">
+                <input type="radio" name="campo" value="2" id="email">
+                <label for="email">Email</label>
+            </div>
+            <div class="func-radio">
+                <input type="radio" name="campo" value="3" id="horac">
+                <label for="horac">Hora de chegada</label>
+            </div>
+            <div class="func-radio">
+                <input type="radio" name="campo" value="4" id="horas">
+                <label for="horas">Hora de saida</label>
+            </div>
+            <div class="func-radio">
+                <input type="radio" name="campo" value="5" id="horast">
+                <label for="horast">Horas totais</label>
+            </div>
+            <br></br>
+            <button class="enviar button">Enviar</button>
+        </div>
+        <div class="container-ex">
+            <h1>Insira o novo dado</h1>
+            <input class="login-input" type="text" placeholder="Novo dado">
+            <br></br>
+            <button class="enviar button">Enviar</button>
+        </div>
+        <div class="container-ex">
+            <h1>Adicionar funcionario</h1>
+            <input class="login-input" type="text" placeholder="Nome">
+            <br></br>
+            <input class="login-input" type="text" placeholder="Senha">
+            <br></br>
+            <input class="login-input" type="email" placeholder="Email@exemplo.com">
+            <br></br>
+            <input class="login-input" type="text" placeholder="Cargo">
+            <br></br>
+            <input class="login-input" type="text" placeholder="Hora de entrada">
+            <br></br>
+            <input class="login-input" type="text" placeholder="Hora de saida">
+            <br></br>
+            <input class="login-input" type="text" placeholder="Horas totais">
+            <br></br>
+            <button class="enviar button">Adicionar funcionario</button>
+        </div>
+        <div class="container-ex">
+            <h1>Gerar Relatorio</h1>
+            <div class="input-group">
+                <label for="data-inicio">Data de Inicio</label>
+                <input type="date" id="data-inicio" name="data-inicio">
+            </div>
+            <div class="input-group">
+                <label for="data-fim">Data de Fim</label>
+                <input type="date" id="data-fim" name="data-fim">
+            </div>
+            <button class="enviar button">Gerar Relatorio</button>
         </div>
     </main>
+    <script type="module" src="../TS/admin/admin.js"></script>
 </body>
 </html>

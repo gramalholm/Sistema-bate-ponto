@@ -32,7 +32,30 @@ header a img {
 }
 
 .button-img {
-    width: 50%;
     height: auto;
-    padding-left: 20px;
+    padding-left: 0;
+}
+
+.container {
+    position: absolute;
+    top:50%;
+    left:50%;
+    transform: translate(-50%, -50%);
+    padding: 50px;
+    border-radius: 15px;
+    color: var(--cor-2);
+}
+
+.container-ex{
+    display: none;
+    position: absolute;
+    background: var(--cor-1);
+    position: absolute;
+    top:50%;
+    left:50%;
+    transform: translate(-50%, -50%);
+    padding: 50px;
+    border-radius: 15px;
+    color: var(--cor-2);
+    z-index: 2;
 }
