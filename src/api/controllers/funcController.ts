@@ -1,3 +1,4 @@
+
 import { Request, Response } from "express"
 import { changePassword } from "../services/funcServices"
 
@@ -22,7 +23,6 @@ export class funcController{
             return res.status(500).json({ error: 'Erro interno do servidor.' })
         }
     }
-
     public static async checkInOut(req: Request, res: Response):Promise<Response>{
         
     }
