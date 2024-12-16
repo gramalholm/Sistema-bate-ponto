@@ -10,13 +10,12 @@ import express, {Request, Response} from 'express';
 */
 const adminRouter = Router();
 
-adminRouter.get('/', async (req: Request, res: Response) => {
+adminRouter.get('/admin', async (req: Request, res: Response) => {
     res.sendFile('teste.html', {root: 'src'});
 });
 
-adminRouter.post('/',  async  (req: Request, res: Response) =>{
+adminRouter.post('/admin',  adminController.createFunc);
 
-})
-
+adminRouter.delete('/admin', adminController.removeFunc);
 
 export { adminRouter };
