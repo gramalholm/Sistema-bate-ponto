@@ -1,0 +1,7 @@
+Arquivo .env carrega o endereço do banco de dados que está armazenado em nuvem, pode ser acessado de qualquer computador.
+Para acessar o banco é necessário estar no diretório db/ e digitar o seguinte comando no terminal: npx prisma studio
+
+Para usar nos outros arquivos precisa-se importar o prisma da seguinte forma:
+  import { PrismaClient } from '@prisma/client'
+
+  const prisma = new PrismaClient()
