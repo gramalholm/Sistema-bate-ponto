@@ -33,7 +33,7 @@
 
             const email = document.getElementById('emailInput').value;
 
-            fetch("http://localhost:3000/send-email", {
+            fetch("http://localhost:3333/email/send-email", {
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
                 body: JSON.stringify({ email: email }),
