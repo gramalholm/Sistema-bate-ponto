@@ -1,12 +1,12 @@
 header a {
-    display: inline-block; /* Mantém o comportamento de bloco para a imagem */
-    text-decoration: none; /* Remove sublinhado */
+    display: inline-block;
+    text-decoration: none;
 }
   
 header a img {
-    width: 100%; /* Mantém o tamanho original da imagem */
-    height: auto; /* Proporções corretas */
-    max-width: 150px; /* Ajuste conforme necessário */
+    width: 100%;
+    height: auto; 
+    max-width: 150px; 
 }
 
 .button{

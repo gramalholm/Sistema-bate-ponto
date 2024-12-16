@@ -1,6 +1,7 @@
 import { Prisma, PrismaClient } from "@prisma/client";
 import { Funcionario } from "../../models/Funcionario";
 
+
 export const findLogin = async (user: string, password: string):Promise<Funcionario> =>{
     
     const prisma = new PrismaClient();
