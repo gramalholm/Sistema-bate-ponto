@@ -20,7 +20,7 @@ export class adminController{
     public static async createFunc(req: Request<undefined, undefined, FuncionarioCreate>, res: Response):Promise<Response>{
         try{
             let validatedFuncionario: FuncionarioCreate | undefined;
-
+            console.log("validatedFuncionario");
             try{
                 validatedFuncionario = await bodyValidation.validate(req.body, {abortEarly: false});
             }catch(error){
@@ -33,10 +33,11 @@ export class adminController{
                     validationErrors[error.path] = error.message;
                 });
 
-                return res.status(404).json({
+                return res.status(400).json({
                     errors:validationErrors,
                 });
             }
+            console.log("validatedFuncionario");
             console.log(validatedFuncionario);
             const funcionario = await createFunc(validatedFuncionario);
         

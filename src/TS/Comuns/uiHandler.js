@@ -11,13 +11,10 @@ export function toggleContainer(containerToShow, mainContainer) {
 }
 
 // Função para restaurar o estado inicial
-export function resetContainers(containers, mainContainer) {
-    if (containers && mainContainer) {
+export function resetContainers(container, mainContainer) {
+    if (container && mainContainer) {
         // Itera sobre o NodeList e esconde cada container individualmente
-        containers.forEach(container => {
-            container.style.display = 'none';
-        });
-
+        container.style.display = 'none';
         // Reativa o container principal
         mainContainer.style.pointerEvents = 'auto';
     } else {

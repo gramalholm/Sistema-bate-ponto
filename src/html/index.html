@@ -41,23 +41,15 @@
                 headers: { "Content-Type": "application/json" },
                 body: JSON.stringify({ email, senha }),
             })
-            .then(response => {
-                if (!response.ok) {
-                    throw new Error('Erro na resposta do servidor');
-                }
-                return response.json();
-            })
+            .then(response => response.json())
             .then(data => {
                 if (data.redirect) {
-                    window.location.href = data.redirect; // Redireciona para a página retornada pelo servidor
+                    window.location.href = data.redirect;
                 } else if (data.error) {
-                    alert(data.error); // Exibe mensagens de erro
+                    alert(data.error); 
                 }
             })
-            .catch(error => {
-                console.error('Erro:', error);
-                alert('Erro ao realizar o login: ' + error.message);
-            });
+            .catch(error => console.error("Erro:", error));
         });
     </script>
 </body>

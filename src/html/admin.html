@@ -47,27 +47,27 @@
             <br></br>
             <p>Marque o campo que deseja editar</p>
             <div class="func-radio">
-                <input type="radio" name="campo" value="0" id="nome">
+                <input type="radio" name="campo" value="0" id="checkNome">
                 <label for="nome">Nome</label>
             </div>
             <div class="func-radio">
-                <input type="radio" name="campo" value="1" id="senha">
+                <input type="radio" name="campo" value="1" id="checkSenha">
                 <label for="senha">Senha</label>
             </div>
             <div class="func-radio">
-                <input type="radio" name="campo" value="2" id="email">
+                <input type="radio" name="campo" value="2" id="checkEmail">
                 <label for="email">Email</label>
             </div>
             <div class="func-radio">
-                <input type="radio" name="campo" value="3" id="horac">
+                <input type="radio" name="campo" value="3" id="checkHorac">
                 <label for="horac">Hora de chegada</label>
             </div>
             <div class="func-radio">
-                <input type="radio" name="campo" value="4" id="horas">
+                <input type="radio" name="campo" value="4" id="checkHoras">
                 <label for="horas">Hora de saida</label>
             </div>
             <div class="func-radio">
-                <input type="radio" name="campo" value="5" id="horast">
+                <input type="radio" name="campo" value="5" id="checkHorast">
                 <label for="horast">Horas totais</label>
             </div>
             <br></br>
@@ -81,21 +81,23 @@
         </div>
         <div class="container-ex">
             <h1>Adicionar funcionario</h1>
-            <input class="login-input" type="text" placeholder="Nome">
-            <br></br>
-            <input class="login-input" type="text" placeholder="Senha">
-            <br></br>
-            <input class="login-input" type="email" placeholder="Email@exemplo.com">
-            <br></br>
-            <input class="login-input" type="text" placeholder="Cargo">
-            <br></br>
-            <input class="login-input" type="text" placeholder="Hora de entrada">
-            <br></br>
-            <input class="login-input" type="text" placeholder="Hora de saida">
-            <br></br>
-            <input class="login-input" type="text" placeholder="Horas totais">
-            <br></br>
-            <button class="enviar button">Adicionar funcionario</button>
+            <form action="" id="formAddfunc">
+                <input class="login-input" type="text" id="nome" placeholder="Nome">
+                <br></br>
+                <input class="login-input" type="text" id="senha" placeholder="Senha">
+                <br></br>
+                <input class="login-input" type="email" id="email" placeholder="Email@exemplo.com">
+                <br></br>
+                <input class="login-input" type="text" id="cargo" placeholder="Cargo">
+                <br></br>
+                <input class="login-input" type="text" id="hora_entrada" placeholder="Hora de entrada">
+                <br></br>
+                <input class="login-input" type="text" id="hora_saida" placeholder="Hora de saida">
+                <br></br>
+                <input class="login-input" type="text" id="horas_totais" placeholder="Horas totais">
+                <br></br>
+                <button class="enviar button" type="submit">Adicionar funcionario</button>
+            </form>
         </div>
         <div class="container-ex">
             <h1>Gerar Relatorio</h1>

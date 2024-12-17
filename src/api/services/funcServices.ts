@@ -59,7 +59,6 @@ export const getFuncbyid = async(email: string):Promise<Funcionario> =>{
                 email: email,
             }
         });
-        console.log(funcionario);
         if (!funcionario) {
             throw new NotFoundException('funcionario');
         }
@@ -104,14 +103,14 @@ export const createFunc = async(body: FuncionarioCreate):Promise<Funcionario> =>
     console.log("blablabla");
     const prisma = new PrismaClient();
     console.log("PrismaClient instance created");
-    console.log(body);
+    //console.log(body);
     try {
 
         /*const funcionarioEmail = await getFuncbyid(body.email);
         if(funcionarioEmail){
             throw new Exception('email já cadastrado', 404);
         }*/
-
+       console.log(body);
         const funcionario = await prisma.funcionario.create({
             data: {
                 name: body.name,

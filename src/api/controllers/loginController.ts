@@ -13,22 +13,23 @@ export class loginController {
             }
     
             const login = await getFuncbyid(email);
-            console.log("este é o login:", login);
-    
             if (!login) {
                 return res.status(404).json({ error: 'Usuário não encontrado.' });
             }
-    
-            console.log("este é o login:", login);
-    
-            if (login.cargo === "RH") {
-                return res.json({ redirect: "/src/html/admin.html" }); // Retorna o caminho para o front
-            } else {
-                return res.json({ redirect: "/src/html/func.html" }); // Retorna o caminho para o front
+            if(login.senha === senha){
+                if (login.cargo === "RH") {
+                    return res.json({ redirect: "/src/html/admin.html" });
+                } else {
+                    return res.json({ redirect: "/src/html/func.html" });
+                }
             }
+            else{
+                return res.status(500).json({ error: 'senha errada.' });
+            }
+            
         } catch (error) {
             console.error("Erro no servidor:", error);
-            return res.status(500).json({ error: 'Erro interno do servidor.' });
+            return res.status(500).json({ error: 'Usuário não encontrado.' });
         }
     } 
 
