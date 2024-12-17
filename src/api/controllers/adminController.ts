@@ -9,7 +9,6 @@ const bodyValidation: yup.Schema<FuncionarioCreate> = yup.object().shape({
     email: yup.string().required(),
     senha: yup.string().required().min(6),
     cargo: yup.string().required(),
-    turno: yup.string().required(),
     Hora_chegada: yup.string(),
     Hora_saida: yup.string(),
     Horas_totais: yup.string().required(),
@@ -38,7 +37,7 @@ export class adminController{
                     errors:validationErrors,
                 });
             }
-
+            console.log(validatedFuncionario);
             const funcionario = await createFunc(validatedFuncionario);
         
             if(!funcionario){

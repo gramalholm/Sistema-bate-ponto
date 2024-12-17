@@ -8,7 +8,7 @@ datasource db {
 }
 
 model Funcionario {
-  email        String      @id @map("_id") @unique
+  email        String      @id @map("_id")
   senha        String
   name         String
   cargo        String

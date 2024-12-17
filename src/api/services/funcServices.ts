@@ -7,20 +7,20 @@ import { FuncionarioCreate } from "../../models/Interfaces/FuncionariosCreate";
 
 
 //update senha funcionario
-export const changePassword = async(email:string, body: FuncionarioUpdatePswd):Promise<Funcionario> =>{
+export const changePassword = async(email:string, senha: string):Promise<Funcionario> =>{
     const prisma = new PrismaClient();
     const funcionario = await getFuncbyid(email);
 
-    if(!email || !body.senha){
+    if(!email || !senha){
         throw new Exception('senha não informada', 404);
     }
 
     const updateFuncionario = await prisma.funcionario.update({
        where:{
-              id: email
+              email: email
        },
         data:{
-            senha: body.senha
+            senha: senha
         }
     })
     return funcionario;
@@ -53,14 +53,13 @@ export const getFuncbyid = async(email: string):Promise<Funcionario> =>{
         if (!email) {
             throw new Exception('email não informado', 404);
         }
-
         // Aguarde a execução da consulta
         const funcionario = await prisma.funcionario.findUnique({
             where: {
-                id: email,
+                email: email,
             }
         });
-
+        console.log(funcionario);
         if (!funcionario) {
             throw new NotFoundException('funcionario');
         }
@@ -81,7 +80,7 @@ export const deleteFunc = async(email: string):Promise<Funcionario> =>{
 
     const funcionario = prisma.funcionario.findUnique({
         where:{
-            id: email
+            email: email
         }
     })
 
@@ -91,7 +90,7 @@ export const deleteFunc = async(email: string):Promise<Funcionario> =>{
 
     const deleteFuncionario = await prisma.funcionario.delete({
         where:{
-            id: email
+            email: email
         }
     })
     if(!deleteFuncionario){
@@ -108,10 +107,10 @@ export const createFunc = async(body: FuncionarioCreate):Promise<Funcionario> =>
     console.log(body);
     try {
 
-        const funcionarioEmail = await getFuncbyid(body.email);
+        /*const funcionarioEmail = await getFuncbyid(body.email);
         if(funcionarioEmail){
             throw new Exception('email já cadastrado', 404);
-        }
+        }*/
 
         const funcionario = await prisma.funcionario.create({
             data: {
@@ -119,7 +118,6 @@ export const createFunc = async(body: FuncionarioCreate):Promise<Funcionario> =>
                 senha: body.senha,
                 email: body.email,
                 cargo: body.cargo,
-                turno: body.turno,
                 Hora_chegada: body.Hora_chegada, 
                 Hora_saida: body.Hora_saida, 
                 Horas_totais: body.Horas_totais 

@@ -6,5 +6,4 @@ export interface Funcionario{
     Hora_saida?: string | null;
     Horas_totais: string;
     cargo: string;
-    turno: string;
 }
