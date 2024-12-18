@@ -84,6 +84,14 @@ export const deleteFunc = async (email: string): Promise<Funcionario> => {
         if (!funcionario) {
             throw new Exception('Funcionário não consta no banco de dados', 404);
         }
+        await prisma.ponto.deleteMany({
+            where: {
+                OR: [
+                    { funcionarioEmail: email },
+                    { funcionarioNome: funcionario.name }
+                ]
+            }
+        });
 
         const deleteFuncionario = await prisma.funcionario.delete({
             where: {

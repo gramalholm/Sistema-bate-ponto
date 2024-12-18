@@ -18,4 +18,6 @@ adminRouter.post('/', adminController.createFunc);
 
 adminRouter.delete('/:id', adminController.removeFunc);
 
+adminRouter.put('/:id', adminController.removeFunc);
+
 export { adminRouter };

@@ -15,8 +15,8 @@ model Funcionario {
   Hora_chegada String?
   Hora_saida   String?
   Horas_totais String
-  pontosEmail  Ponto[]     @relation("FuncionarioByEmail")
-  pontosName   Ponto[]     @relation("FuncionarioByName")
+  pontosEmail  Ponto[]     @relation("FuncionarioByEmail")  // Remover o onDelete daqui
+  pontosName   Ponto[]     @relation("FuncionarioByName")   // Remover o onDelete daqui
 }
 
 model Ponto {
@@ -24,8 +24,8 @@ model Ponto {
   tipo              String
   horario           DateTime    @default(now())
 
-  funcionarioE      Funcionario @relation("FuncionarioByEmail", fields: [funcionarioEmail], references: [email])
+  funcionarioE      Funcionario @relation("FuncionarioByEmail", fields: [funcionarioEmail], references: [email], onDelete: Cascade) // onDelete no lado do Ponto
   funcionarioEmail  String
-  funcionarioN      Funcionario @relation("FuncionarioByName", fields: [funcionarioNome], references: [name])
+  funcionarioN      Funcionario @relation("FuncionarioByName", fields: [funcionarioNome], references: [name], onDelete: Cascade) // onDelete no lado do Ponto
   funcionarioNome   String
 }

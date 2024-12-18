@@ -13,4 +13,6 @@ export function editFunc() {
     editButton.addEventListener('click', () => {
         toggleContainer(funcContainerEx[1], funcContainer);
     });
+
+    
 }
