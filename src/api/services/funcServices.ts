@@ -1,12 +1,13 @@
 import { PrismaClient } from "@prisma/client";
+import { hash } from "bcrypt";
 import { Funcionario} from "../../models/Funcionario";
+import { Ponto } from "../../models/Ponto";
 import { NotFoundException } from "../Exceptions/NotFoundException";
 import { Exception } from "../Exceptions/Exception";
 import { FuncionarioUpdatePswd } from "../../models/Interfaces/FuncionarioUpdatePswd";
 import { FuncionarioCreate } from "../../models/Interfaces/FuncionariosCreate";
 
 
-//update senha funcionario
 export const changePassword = async(email:string, senha: string):Promise<Funcionario> =>{
     const prisma = new PrismaClient();
     const funcionario = await getFuncbyid(email);
@@ -23,37 +24,16 @@ export const changePassword = async(email:string, senha: string):Promise<Funcion
             senha: senha
         }
     })
-    return funcionario;
+    return updateFuncionario;
 }
 
-//getall funcionarios
-/*
-export const getAllFuncionarios = async(dataInicio: Date, dataFinal: Date):Promise<Funcionario[]> =>{
-    const prisma = new PrismaClient();
-
-    const funcionarios = await prisma.funcionario.findMany({
-        where:{
-            createdAt:{
-                gte: dataInicio,
-                lte: dataFinal
-            }
-        }   
-    });
-    if(funcionarios?.length === 0){
-         throw new NotFoundException('funcionarios');
-    }
-    return funcionarios;
-}
-*/
-//getFuncbyid
 export const getFuncbyid = async(email: string):Promise<Funcionario> =>{
-
+    console.log("teste");
     const prisma = new PrismaClient();
     try {
         if (!email) {
             throw new Exception('email não informado', 404);
         }
-        // Aguarde a execução da consulta
         const funcionario = await prisma.funcionario.findUnique({
             where: {
                 email: email,
@@ -70,47 +50,88 @@ export const getFuncbyid = async(email: string):Promise<Funcionario> =>{
     }
 }
 
-//delete funcionario
-export const deleteFunc = async(email: string):Promise<Funcionario> =>{
+export const deleteFunc = async (email: string): Promise<Funcionario> => {
     const prisma = new PrismaClient();
-    if(!email){
-        throw new Exception('id não informado', 404);
-    }
-
-    const funcionario = prisma.funcionario.findUnique({
-        where:{
-            email: email
+    try {
+        if (!email) {
+            throw new Exception('Email não informado', 400); 
         }
-    })
 
-    if(!funcionario){
-         throw new NotFoundException('funcionario');
-    }
+        const funcionario = await prisma.funcionario.findUnique({
+            where: {
+                email: email
+            }
+        });
 
-    const deleteFuncionario = await prisma.funcionario.delete({
-        where:{
-            email: email
+        if (!funcionario) {
+            throw new Exception('Funcionário não consta no banco de dados', 404);
         }
-    })
-    if(!deleteFuncionario){
-         throw new NotFoundException('funcionario');
+        await prisma.ponto.deleteMany({
+            where: {
+                OR: [
+                    { funcionarioEmail: email },
+                    { funcionarioNome: funcionario.name }
+                ]
+            }
+        });
+
+        const deleteFuncionario = await prisma.funcionario.delete({
+            where: {
+                email: email
+            }
+        });
+
+        return deleteFuncionario;
+
+    } catch (error) {
+        console.error("Erro ao deletar funcionário:", error);
+        throw error;
+    } finally {
+        await prisma.$disconnect();
+        console.log("PrismaClient desconectado");
     }
-    return deleteFuncionario;
 }
 
-//create funcionario
-export const createFunc = async(body: FuncionarioCreate):Promise<Funcionario> => {
-    console.log("blablabla");
+export const editFunc = async (email: string, campo: string, novoValor: string): Promise<any> => {
     const prisma = new PrismaClient();
-    console.log("PrismaClient instance created");
-    //console.log(body);
     try {
+        const funcionario = await prisma.funcionario.findUnique({
+            where: { email: email }
+        });
+    
+        if (!funcionario) {
+            throw new Error('Funcionário não consta no banco de dados');
+        }
+    
+        const camposValidos = ['nome', 'senha', 'email', 'Hora_chegada', 'Hora_saida', 'horas_totais'];
+        
+        if (!camposValidos.includes(campo)) {
+            throw new Error('Campo inválido.');
+        }
+    
+        const dadosAtualizados = {
+            [campo]: novoValor
+        };
+    
+        const funcionarioAtualizado = await prisma.funcionario.update({
+            where: { email: email },
+            data: dadosAtualizados
+        });
+    
+        return funcionarioAtualizado;
 
-        /*const funcionarioEmail = await getFuncbyid(body.email);
-        if(funcionarioEmail){
-            throw new Exception('email já cadastrado', 404);
-        }*/
-       console.log(body);
+    } catch (error) {
+        console.error("Erro ao editar funcionário:", error);
+        throw error;
+    } finally {
+        await prisma.$disconnect();
+        console.log("PrismaClient desconectado");
+    }
+}
+export const createFunc = async(body: FuncionarioCreate):Promise<Funcionario> => {
+    const prisma = new PrismaClient();
+    console.log(body);
+    try {
         const funcionario = await prisma.funcionario.create({
             data: {
                 name: body.name,
@@ -137,21 +158,56 @@ export const createFunc = async(body: FuncionarioCreate):Promise<Funcionario> =>
     }
 }
 
+export async function checkIfEmailExists(email: string) {
+    const prisma = new PrismaClient();
+    try {
+        // Verifica se existe um funcionário com o email fornecido
+        const funcionario = await prisma.funcionario.findUnique({
+            where: {
+                email: email,
+            },
+        });
 
-//update funcionario checkIn
-/*
-const updateCheckIn = async(id:string, checkIn: string):Promise<Funcionario> =>{
-    const prisma = PrismaClient();
-
-    if(!id || !checkIn){
-        throw new Exception('id e checkIn são obrigatórios', 404);
+        // Se o resultado for null, significa que o email não foi encontrado
+        if (funcionario) {
+            return true;
+        } else {
+            return false;
+        }
+    } catch (error) {
+        console.error('Erro ao verificar email:', error);
+        return false;
+    } finally {
+        await prisma.$disconnect();
     }
+}
 
-    const funcionario = await prisma.Funcionario.update({
-        where:{
-            id: id,
-            
+export const createCSV = async(pontos: Ponto[]) => {
+    const createCsvWriter = require('csv-writer').createObjectCsvWriter;
+
+    const csvWriter = createCsvWriter({
+        path: 'relatiorio.csv',
+        header:[
+            {id: 'data', title: 'Data'},
+            {id: 'name', title:'Funcionario'},
+            {id: 'email', title: 'Email'},
+            {id: 'tipo', title: 'Tipo'},
+            {id: 'horario', title: 'Horário'},
+        ]
+    });
+    const records = [pontos.map(ponto => {
+        return {
+            data: ponto.horario,
+            name: ponto.funcionarioN.name,
+            email: ponto.funcionarioE.email,
+            horario: ponto.horario,
+            tipo: ponto.tipo,
         }
     })
+    ];
+
+    csvWriter.writeRecords(records)
+        .then(() => {
+            console.log('...Done');
+        });
 }
-*/

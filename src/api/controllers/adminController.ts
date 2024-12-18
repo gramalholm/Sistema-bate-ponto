@@ -1,8 +1,12 @@
 
 import { Request, Response } from "express";
-import { deleteFunc, createFunc } from "../services/funcServices";
+import { deleteFunc, createFunc, checkIfEmailExists, editFunc } from "../services/funcServices";
+import { createCSV } from "../services/funcServices";
 import { FuncionarioCreate } from "../../models/Interfaces/FuncionariosCreate";
+import { ponto } from "../../models/Ponto";
 import * as yup from 'yup';
+import { create } from "axios";
+import { getAllPontos } from "../services/pontoServices";
 
 const bodyValidation: yup.Schema<FuncionarioCreate> = yup.object().shape({
     name: yup.string().required(),
@@ -14,13 +18,11 @@ const bodyValidation: yup.Schema<FuncionarioCreate> = yup.object().shape({
     Horas_totais: yup.string().required(),
 });
 
-
 export class adminController{
 
     public static async createFunc(req: Request<undefined, undefined, FuncionarioCreate>, res: Response):Promise<Response>{
         try{
             let validatedFuncionario: FuncionarioCreate | undefined;
-            console.log("validatedFuncionario");
             try{
                 validatedFuncionario = await bodyValidation.validate(req.body, {abortEarly: false});
             }catch(error){
@@ -33,16 +35,14 @@ export class adminController{
                     validationErrors[error.path] = error.message;
                 });
 
-                return res.status(400).json({
+                return res.status(404).json({
                     errors:validationErrors,
                 });
             }
-            console.log("validatedFuncionario");
-            console.log(validatedFuncionario);
             const funcionario = await createFunc(validatedFuncionario);
         
             if(!funcionario){
-                return res.status(400).json({error: 'Erro ao criar o funcionário'});
+                return res.status(404).json({error: 'Erro ao criar o funcionário'});
             }
 
             return res.status(200).json({
@@ -51,67 +51,86 @@ export class adminController{
             });
 
         }catch(error){
-            return res.status(500).json({ error: 'Erro ao criar o funcionário' });
+            return res.status(400).json({ error: 'Erro ao criar o funcionário' });
         }
     }
-/*
-    public static async getAllFuncs(req: Request, res: Response):Promise<Response>{
+
+    public static async gerarRelatório(req: Request, res: Response):Promise<Response>{
         try{
             const dataInicial = req.body.dataInicial;
             const dataFinal = req.body.dataFinal;
-            const funcionarios = getAllFuncionarios(dataFinal, dataInicial);
-            if(!funcionarios){
-                return res.status(404).json({error: 'Funcionários não encontrados'});
+
+            const pontos: Ponto[] = await getAllPontos(dataFinal, dataInicial);
+            if(!pontos){
+                return res.status(404).json({error: 'Dados dos pontos não encontrados'});
             }
-            return res.status(200).json(funcionarios);
+            await createCSV(pontos);
+            return res.status(200).json(pontos);
         }catch(error){
             return res.status(500).json({ error: 'Erro ao buscar os funcionários' });
         }
     }
 
-    public static async createCSV(req: Request, res: Response):Promise<void>{
-        const createCsvWriter = require('csv-writer').createObjectCsvWriter;
-
-        const csvWriter = createCsvWriter({
-            path: 'relatiorio.csv',
-            header:[
-                {id: 'data', title: 'Data'},
-                {id: 'name', title:'Funcionario'},
-                {id: 'id', title: 'Código do Funcionário'},
-                {id: 'horario_entrada', title: 'Horário de Entrada'},
-                {id: 'horario_saida', title: 'Horário de Saída'},
-                {id: 'numeros_atrasos', title: 'Número de Atrasos'},
-                {id: 'numeros_faltas', title: 'Falta'},
-            ]
-        });
-
-        const funcionarios =  this.getAllFuncs(req, res);
-
-        const records = [funcionarios];
-
-        csvWriter.writeRecords(records)
-            .then(() => {
-                console.log('...Done');
-            });
-    }
-*/
     public static async removeFunc(req: Request, res: Response):Promise<Response>{
         try{
-            const { email} = req.body.email;
-
+            const { email } = req.body;
             if(!email){
                 return res.status(404).json({error: 'email é obrigatório'});
             }
             
-            const hasDeleted = deleteFunc(email);
+            const hasDeleted = await deleteFunc(email);
 
             if(!hasDeleted){
                 return res.status(404).json({error: 'funcionario não encontrado'});
             }
-            return res.status(200).json("Funcionário removido com sucesso");
+            return res.status(200).json({message: 'Funcionário criado com sucesso'});
 
         }catch(error){
             return res.status(500).json({ error: 'Erro ao remover o funcionário' });
         }
     }
+
+    public static async getFunc(req: Request, res: Response) {
+        console.log("teste");
+        try{
+            const { email } = req.body;
+            console.log(email);
+            if(!email){
+                return res.status(404).json({error: 'email é obrigatório'});
+            }
+            
+            const existe = await checkIfEmailExists(email);
+
+            if(!existe){
+                return res.status(404).json({error: 'funcionario não encontrado'});
+            }
+            return res.status(200).json({message: 'Funcionário existe.'});
+
+        }catch(error){
+            return res.status(500).json({ error: 'Erro ao procurar o funcionário' });
+        }
+    }
+
+    public static async putFunc(req: Request, res: Response) {
+        console.log("teste");
+        try{
+            const { email, campo, novoValor } = req.body;
+            console.log(email);
+            if (!email || !campo || !novoValor) {
+                return res.status(400).json({ error: 'Todos os campos são obrigatórios.' });
+            }
+            
+            const funcionarioEdit = await editFunc(email, campo, novoValor);
+
+            if(!funcionarioEdit){
+                return res.status(404).json({error: 'funcionario não encontrado'});
+            }
+            return res.status(200).json({message: 'Funcionário editado com sucesso.'});
+
+        }catch(error){
+            return res.status(500).json({ error: 'Erro ao editar o funcionário' });
+        }
+    }
+    
 }
+

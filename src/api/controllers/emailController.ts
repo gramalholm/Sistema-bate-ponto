@@ -1,6 +1,10 @@
 import { Request, Response } from "express";
 import { transporter } from "../config/nodemailerConfig";
-import { getFuncbyid, changePassword } from "../services/funcServices";
+import { getFuncbyid, createCSV, changePassword } from "../services/funcServices";
+import { getAllPontos } from "../services/pontoServices";
+import schedule from "node-schedule";
+import { Funcionario } from "@prisma/client";
+
 
 function gerarSenhaTemporaria(): string {
     const caracteres = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
@@ -38,3 +42,37 @@ export const sendEmail = async (req: Request, res: Response) => {
         return res.status(500).json({ error: "email não cadastrado." });
     }
 };
+
+export const sendReport = async (dataInicio: Date, dataFinal: Date) => {
+    try{
+        const pontos = await getAllPontos(dataInicio, dataFinal);
+        createCSV(pontos);
+        await transporter.sendMail({
+            from: "Suporte <suportesistmadeponto@gmail.com>",
+            to: "Visione-Rh@gmail.com",
+            subject: "Relatório de ponto",
+            text: "Segue em anexo o relatório de ponto dos funcionários",
+            attachments: [
+                {
+                    filename: 'relatorio.csv',
+                    path: './relatorio.csv'
+                }
+            ]
+        });
+        console.log("Email enviado com sucesso!");
+    }catch(error){
+        console.error(error);
+    }
+}
+
+export function configurarAgendamentoRelatorio() {
+    schedule.scheduleJob("59 23 28-31 * *", async() => {
+        const dataAtual = new Date();
+        const ultimoDia = new Date(dataAtual.getFullYear(), dataAtual.getMonth() + 1, 0);
+        const primeiroDia = new Date(dataAtual.getFullYear(), dataAtual.getMonth(), 1);
+
+        if(dataAtual.getDate() === ultimoDia.getDate()){
+            await sendReport(primeiroDia, ultimoDia);
+        }
+    })
+}
