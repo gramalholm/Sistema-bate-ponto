@@ -18,7 +18,6 @@ export class loginController {
             if (!login) {
                 return res.status(404).json({ error: 'Usuário não encontrado.' });
             }
-            
 
             if(login.senha === senha){
                 if (login.cargo === "RH") {

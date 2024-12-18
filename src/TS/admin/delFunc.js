@@ -34,18 +34,14 @@ export async function delFunc() {
             return response.json();
         })
         .then(data => {
-            console.log("foi");
             const funcContainerEx = document.querySelectorAll('.container-ex');
-            console.log("foi");
             const funcContainer = document.querySelector('.admin-container');
-            console.log("foi");
             if (data.message) {
                 resetContainer(funcContainerEx[0], funcContainer);
                 alert('Funcionário deletado com sucesso!');
             } else if (data.error) {
                 alert('Erro ao deletar o funcionário');
             }
-            console.log("foi");
         })
         .catch(error => {
             console.error('Erro:', error);

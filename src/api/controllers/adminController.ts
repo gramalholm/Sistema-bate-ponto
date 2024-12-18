@@ -99,7 +99,7 @@ export class adminController{
                 return res.status(404).json({error: 'email é obrigatório'});
             }
             
-            const hasDeleted = deleteFunc(email);
+            const hasDeleted = await deleteFunc(email);
 
             if(!hasDeleted){
                 return res.status(404).json({error: 'funcionario não encontrado'});
@@ -110,5 +110,6 @@ export class adminController{
             return res.status(500).json({ error: 'Erro ao remover o funcionário' });
         }
     }
+
 }
 

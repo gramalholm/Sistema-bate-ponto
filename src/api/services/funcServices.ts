@@ -7,7 +7,6 @@ import { FuncionarioUpdatePswd } from "../../models/Interfaces/FuncionarioUpdate
 import { FuncionarioCreate } from "../../models/Interfaces/FuncionariosCreate";
 
 
-//update senha funcionario
 export const changePassword = async(email:string, senha: string):Promise<Funcionario> =>{
     const prisma = new PrismaClient();
     const funcionario = await getFuncbyid(email);
@@ -46,7 +45,6 @@ export const getAllFuncionarios = async(dataInicio: Date, dataFinal: Date):Promi
     return funcionarios;
 }
 */
-//getFuncbyid
 export const getFuncbyid = async(email: string):Promise<Funcionario> =>{
     console.log("teste");
     const prisma = new PrismaClient();
@@ -54,7 +52,6 @@ export const getFuncbyid = async(email: string):Promise<Funcionario> =>{
         if (!email) {
             throw new Exception('email não informado', 404);
         }
-        // Aguarde a execução da consulta
         const funcionario = await prisma.funcionario.findUnique({
             where: {
                 email: email,
@@ -71,24 +68,23 @@ export const getFuncbyid = async(email: string):Promise<Funcionario> =>{
     }
 }
 
-//delete funcionario
 export const deleteFunc = async (email: string): Promise<Funcionario> => {
     const prisma = new PrismaClient();
     try {
         if (!email) {
-            throw new Exception('email não informado', 404);
+            throw new Exception('Email não informado', 400); 
         }
+
         const funcionario = await prisma.funcionario.findUnique({
             where: {
                 email: email
             }
         });
-        console.log(funcionario)
+
         if (!funcionario) {
-            throw new NotFoundException('funcionario');
+            throw new Exception('Funcionário não consta no banco de dados', 404);
         }
 
-        // Agora pode deletar o registro
         const deleteFuncionario = await prisma.funcionario.delete({
             where: {
                 email: email
@@ -96,25 +92,20 @@ export const deleteFunc = async (email: string): Promise<Funcionario> => {
         });
 
         return deleteFuncionario;
+
     } catch (error) {
-        console.error("Erro delete funcionario:", error);
+        console.error("Erro ao deletar funcionário:", error);
         throw error;
     } finally {
         await prisma.$disconnect();
-        console.log("PrismaClient disconnected");
+        console.log("PrismaClient desconectado");
     }
 }
 
-//create funcionario
 export const createFunc = async(body: FuncionarioCreate):Promise<Funcionario> => {
     const prisma = new PrismaClient();
     console.log(body);
     try {
-
-        /*const funcionarioEmail = await getFuncbyid(body.email);
-        if(funcionarioEmail){
-            throw new Exception('email já cadastrado', 404);
-        }*/
         const funcionario = await prisma.funcionario.create({
             data: {
                 name: body.name,
