@@ -4,10 +4,10 @@ import { funcController } from "../controllers/funcController";
 
 const funcRouter = Router();
 
-funcRouter.get('/func', (req: Request, res: Response) => {
+funcRouter.get('/', (req: Request, res: Response) => {
     res.sendFile('func.html', {root: 'src'});
 })
 
-funcRouter.post('/func/:id', funcController.changePassword);
+funcRouter.post('/:id', funcController.changePassword);
 
 export { funcRouter }; 

@@ -11,7 +11,7 @@ import { adminController } from "../controllers/adminController";
 const adminRouter = Router();
 
 adminRouter.get('/page', async (req: Request, res: Response) => {
-    res.sendFile('teste.html', {root: 'src'});
+    res.sendFile('admin.html', {root: 'src'});
 });
 
 adminRouter.post('/', adminController.createFunc);

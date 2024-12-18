@@ -1,6 +1,8 @@
-
 import { getFuncbyid } from "../services/funcServices";
 import { Request,Response } from "express";
+import { compare } from "bcrypt";
+import jwt from "jsonwebtoken";
+
 
 export class loginController {
     
@@ -13,14 +15,26 @@ export class loginController {
             }
     
             const login = await getFuncbyid(email);
+
             if (!login) {
                 return res.status(404).json({ error: 'Usuário não encontrado.' });
             }
-            if(login.senha === senha){
+
+            const isPasswordCorrect = await compare(senha, login.senha);
+
+            console.log(isPasswordCorrect);
+            console.log(login);
+
+            if(isPasswordCorrect){
+
+                const token = jwt.sign({ id: login.email }, process.env.JWT_SECRET as string, {expiresIn: '1d'});
+                
                 if (login.cargo === "RH") {
-                    return res.json({ redirect: "/src/html/admin.html" });
+                    const token = jwt.sign({ id: login.email }, process.env.JWT_SECRET as string, {expiresIn: '1d'});
+                    return res.json({ redirect: "/src/html/admin.html", token });
                 } else {
-                    return res.json({ redirect: "/src/html/func.html" });
+                    const token = jwt.sign({ id: login.email }, process.env.JWT_SECRET as string, {expiresIn: '12h'});
+                    return res.json({ redirect: "/src/html/func.html", token });
                 }
             }
             else{
@@ -28,8 +42,8 @@ export class loginController {
             }
             
         } catch (error) {
-            console.error("Erro no servidor:", error);
-            return res.status(500).json({ error: 'Usuário não encontrado.' });
+        
+            return res.status(500).json({ error: 'Erro ao verificar o login' });
         }
     } 
 
