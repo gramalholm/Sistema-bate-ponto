@@ -45,7 +45,7 @@ export async function delFunc() {
         })
         .catch(error => {
             console.error('Erro:', error);
-            alert('Erro ao realizar a requisição: ' + error.message);
+            alert("Funcionário não consta no banco de dados");
         });
     });
 }

@@ -55,35 +55,34 @@
                 </svg>
             </button>
             <h1>Editar funcionario</h1>
-            <input class="login-input" type="text" placeholder="Email do funcionario">
-            <br></br>
-            <p>Marque o campo que deseja editar</p>
-            <div class="func-radio">
-                <input type="radio" name="campo" value="0" id="checkNome">
-                <label for="checkNome">Nome</label>
-            </div>
-            <div class="func-radio">
-                <input type="radio" name="campo" value="1" id="checkSenha">
-                <label for="checkSenha">Senha</label>
-            </div>
-            <div class="func-radio">
-                <input type="radio" name="campo" value="2" id="checkEmail">
-                <label for="checkEmail">Email</label>
-            </div>
-            <div class="func-radio">
-                <input type="radio" name="campo" value="3" id="checkHorac">
-                <label for="checkHorac">Hora de chegada</label>
-            </div>
-            <div class="func-radio">
-                <input type="radio" name="campo" value="4" id="checkHoras">
-                <label for="checkHoras">Hora de saida</label>
-            </div>
-            <div class="func-radio">
-                <input type="radio" name="campo" value="5" id="checkHorast">
-                <label for="checkHorast">Horas totais</label>
-            </div>
-            <br></br>
-            <button class="enviar button">Enviar</button>
+            <form action="" id="formEditfunc">
+                <input class="login-input" type="text" id="emailEdit" placeholder="Email do funcionario">
+                <br></br>
+                <p>Marque o campo que deseja editar</p>
+                <div class="func-radio">
+                    <input type="radio" name="campo" value="nome" id="checkNome">
+                    <label for="checkNome">Nome</label>
+                </div>
+                <div class="func-radio">
+                    <input type="radio" name="campo" value="senha" id="checkSenha">
+                    <label for="checkSenha">Senha</label>
+                </div>
+                <div class="func-radio">
+                    <input type="radio" name="campo" value="Hora_chegada" id="checkHorac">
+                    <label for="checkHorac">Hora de chegada</label>
+                </div>
+                <div class="func-radio">
+                    <input type="radio" name="campo" value="Hora_saida" id="checkHoras">
+                    <label for="checkHoras">Hora de saida</label>
+                </div>
+                <div class="func-radio">
+                    <input type="radio" name="campo" value="horas_totais" id="checkHorast">
+                    <label for="checkHorast">Horas totais</label>
+                </div>
+                <br></br>
+                <button class="enviar button">Enviar</button>
+            </form>
+            
         </div>
         <div class="container-ex">
             <button class="close-btn">
@@ -92,9 +91,11 @@
                 </svg>
             </button>
             <h1>Insira o novo dado</h1>
-            <input class="login-input" type="text" placeholder="Novo dado">
-            <br></br>
-            <button class="enviar button">Enviar</button>
+            <form action="" id="formEditfuncEsc">
+                <input class="login-input" type="text" id="editCampo" placeholder="Novo dado">
+                <br></br>
+                <button class="enviar button">Enviar</button>
+            </form>
         </div>
         <div class="container-ex">
             <button class="close-btn">

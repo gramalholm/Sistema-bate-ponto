@@ -1,6 +1,6 @@
 
 import { Request, Response } from "express";
-import { deleteFunc, createFunc } from "../services/funcServices";
+import { deleteFunc, createFunc, checkIfEmailExists, editFunc } from "../services/funcServices";
 import { FuncionarioCreate } from "../../models/Interfaces/FuncionariosCreate";
 import * as yup from 'yup';
 
@@ -110,6 +110,46 @@ export class adminController{
             return res.status(500).json({ error: 'Erro ao remover o funcionário' });
         }
     }
+    public static async getFunc(req: Request, res: Response) {
+        console.log("teste");
+        try{
+            const { email } = req.body;
+            console.log(email);
+            if(!email){
+                return res.status(404).json({error: 'email é obrigatório'});
+            }
+            
+            const existe = await checkIfEmailExists(email);
 
+            if(!existe){
+                return res.status(404).json({error: 'funcionario não encontrado'});
+            }
+            return res.status(200).json({message: 'Funcionário existe.'});
+
+        }catch(error){
+            return res.status(500).json({ error: 'Erro ao procurar o funcionário' });
+        }
+    }
+    public static async putFunc(req: Request, res: Response) {
+        console.log("teste");
+        try{
+            const { email, campo, novoValor } = req.body;
+            console.log(email);
+            if (!email || !campo || !novoValor) {
+                return res.status(400).json({ error: 'Todos os campos são obrigatórios.' });
+            }
+            
+            const funcionarioEdit = await editFunc(email, campo, novoValor);
+
+            if(!funcionarioEdit){
+                return res.status(404).json({error: 'funcionario não encontrado'});
+            }
+            return res.status(200).json({message: 'Funcionário editado com sucesso.'});
+
+        }catch(error){
+            return res.status(500).json({ error: 'Erro ao editar o funcionário' });
+        }
+    }
+    
 }
 

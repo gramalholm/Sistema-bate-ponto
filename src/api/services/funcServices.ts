@@ -110,6 +110,42 @@ export const deleteFunc = async (email: string): Promise<Funcionario> => {
     }
 }
 
+export const editFunc = async (email: string, campo: string, novoValor: string): Promise<any> => {
+    const prisma = new PrismaClient();
+    try {
+        const funcionario = await prisma.funcionario.findUnique({
+            where: { email: email }
+        });
+    
+        if (!funcionario) {
+            throw new Error('Funcionário não consta no banco de dados');
+        }
+    
+        const camposValidos = ['nome', 'senha', 'email', 'Hora_chegada', 'Hora_saida', 'horas_totais'];
+        
+        if (!camposValidos.includes(campo)) {
+            throw new Error('Campo inválido.');
+        }
+    
+        const dadosAtualizados = {
+            [campo]: novoValor
+        };
+    
+        const funcionarioAtualizado = await prisma.funcionario.update({
+            where: { email: email },
+            data: dadosAtualizados
+        });
+    
+        return funcionarioAtualizado;
+
+    } catch (error) {
+        console.error("Erro ao editar funcionário:", error);
+        throw error;
+    } finally {
+        await prisma.$disconnect();
+        console.log("PrismaClient desconectado");
+    }
+}
 export const createFunc = async(body: FuncionarioCreate):Promise<Funcionario> => {
     const prisma = new PrismaClient();
     console.log(body);
@@ -140,6 +176,29 @@ export const createFunc = async(body: FuncionarioCreate):Promise<Funcionario> =>
     }
 }
 
+export async function checkIfEmailExists(email: string) {
+    const prisma = new PrismaClient();
+    try {
+        // Verifica se existe um funcionário com o email fornecido
+        const funcionario = await prisma.funcionario.findUnique({
+            where: {
+                email: email,
+            },
+        });
+
+        // Se o resultado for null, significa que o email não foi encontrado
+        if (funcionario) {
+            return true;
+        } else {
+            return false;
+        }
+    } catch (error) {
+        console.error('Erro ao verificar email:', error);
+        return false;
+    } finally {
+        await prisma.$disconnect();
+    }
+}
 
 //update funcionario checkIn
 /*

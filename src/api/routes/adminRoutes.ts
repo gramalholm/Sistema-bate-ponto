@@ -18,6 +18,8 @@ adminRouter.post('/', adminController.createFunc);
 
 adminRouter.delete('/:id', adminController.removeFunc);
 
-adminRouter.put('/:id', adminController.removeFunc);
+adminRouter.put('/:email', adminController.putFunc);
+
+adminRouter.post('/check/:email', adminController.getFunc);
 
 export { adminRouter };
