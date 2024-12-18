@@ -108,7 +108,7 @@ export const deleteFunc = async (email: string): Promise<Funcionario> => {
 //create funcionario
 export const createFunc = async(body: FuncionarioCreate):Promise<Funcionario> => {
     const prisma = new PrismaClient();
-    //console.log(body);
+    console.log(body);
     try {
 
         /*const funcionarioEmail = await getFuncbyid(body.email);

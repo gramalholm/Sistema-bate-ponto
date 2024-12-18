@@ -1,6 +1,21 @@
-import { resetContainers } from '../Comuns/uiHandler.js';
+import { toggleContainer, resetContainer } from '../Comuns/uiHandler.js';
 
 export async function delFunc() {
+    const delButton = document.getElementById('delfunc');
+    const xButton = document.querySelectorAll('.close-btn');
+    const funcContainerEx = document.querySelectorAll('.container-ex');
+    const funcContainer = document.querySelector('.admin-container');
+
+    xButton[0].addEventListener('click', () => {
+        resetContainer(funcContainerEx[0], funcContainer);
+    });
+
+    delButton.addEventListener('click', () => {
+        toggleContainer(funcContainerEx[0], funcContainer);
+    });
+
+
+
     document.getElementById('formDelfunc').addEventListener('submit', function (event) {
         event.preventDefault();
         const email = document.getElementById('emailDel').value;
@@ -25,7 +40,7 @@ export async function delFunc() {
             const funcContainer = document.querySelector('.admin-container');
             console.log("foi");
             if (data.message) {
-                resetContainers(funcContainerEx[0], funcContainer);
+                resetContainer(funcContainerEx[0], funcContainer);
                 alert('Funcionário deletado com sucesso!');
             } else if (data.error) {
                 alert('Erro ao deletar o funcionário');

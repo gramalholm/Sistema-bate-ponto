@@ -23,7 +23,7 @@ export class loginController {
             if(login.senha === senha){
                 if (login.cargo === "RH") {
                     const token = jwt.sign({ id: login.email }, JWT_SECRET, {expiresIn: '6h'});
-                    return res.json({ redirect: "/src/html/admin.html", token });
+                    return res.json({ redirect: "/src/html/admin.html", token, email, nome: login.name });
                 } else {
                     const token = jwt.sign({ id: login.email }, JWT_SECRET, {expiresIn: '2h'});
                     return res.json({ redirect: "/src/html/func.html", token, email, nome: login.name });

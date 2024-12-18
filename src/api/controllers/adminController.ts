@@ -32,14 +32,14 @@ export class adminController{
                     validationErrors[error.path] = error.message;
                 });
 
-                return res.status(400).json({
+                return res.status(404).json({
                     errors:validationErrors,
                 });
             }
             const funcionario = await createFunc(validatedFuncionario);
         
             if(!funcionario){
-                return res.status(400).json({error: 'Erro ao criar o funcionário'});
+                return res.status(404).json({error: 'Erro ao criar o funcionário'});
             }
 
             return res.status(200).json({
@@ -48,7 +48,7 @@ export class adminController{
             });
 
         }catch(error){
-            return res.status(500).json({ error: 'Erro ao criar o funcionário' });
+            return res.status(400).json({ error: 'Erro ao criar o funcionário' });
         }
     }
 /*

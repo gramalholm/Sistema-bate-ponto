@@ -1,6 +1,19 @@
-import { resetContainers } from '../Comuns/uiHandler.js';
+import { toggleContainer,resetContainer } from '../Comuns/uiHandler.js';
 
 export function addFunc() {
+    const addButton = document.getElementById('addfunc');
+    const xButton = document.querySelectorAll('.close-btn');
+    const funcContainerEx = document.querySelectorAll('.container-ex');
+    const funcContainer = document.querySelector('.admin-container');
+
+    xButton[3].addEventListener('click', () => {
+        resetContainer(funcContainerEx[3], funcContainer);
+    });
+
+    addButton.addEventListener('click', () => {
+        toggleContainer(funcContainerEx[3], funcContainer);
+    });
+    
     document.getElementById('formAddfunc').addEventListener('submit', function (event) {
         event.preventDefault();
 
@@ -8,10 +21,7 @@ export function addFunc() {
         const senha = document.getElementById('senha').value;
         const email = document.getElementById('email').value;
         const cargo = document.getElementById('cargo').value;
-        const hora_entrada = document.getElementById('hora_entrada').value;
-        const hora_saida = document.getElementById('hora_saida').value;
         const horas_totais = document.getElementById('horas_totais').value;
-
         fetch("http://localhost:3333/admin/", { 
             method: "POST",
             headers: { "Content-Type": "application/json" },
@@ -20,17 +30,15 @@ export function addFunc() {
                 email: email,
                 senha: senha,
                 cargo: cargo,
-                Hora_chegada: hora_entrada,
-                Hora_saida: hora_saida,
+                Hora_chegada: "null",
+                Hora_saida: "null",
                 Horas_totais: horas_totais
             }),
         })
         .then(response => response.json())
         .then(data => {
-            const funcContainerEx = document.querySelectorAll('.container-ex');
-            const funcContainer = document.querySelector('.admin-container');
             if (data.message) {
-                resetContainers(funcContainerEx[3], funcContainer);
+                resetContainer(funcContainerEx[3], funcContainer);
                 alert('Funcionário criado com sucesso!');
             } else if (data.error) {
                 alert('Erro ao criar o funcionário');
