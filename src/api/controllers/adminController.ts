@@ -20,7 +20,6 @@ export class adminController{
     public static async createFunc(req: Request<undefined, undefined, FuncionarioCreate>, res: Response):Promise<Response>{
         try{
             let validatedFuncionario: FuncionarioCreate | undefined;
-            console.log("validatedFuncionario");
             try{
                 validatedFuncionario = await bodyValidation.validate(req.body, {abortEarly: false});
             }catch(error){
@@ -37,8 +36,6 @@ export class adminController{
                     errors:validationErrors,
                 });
             }
-            console.log("validatedFuncionario");
-            console.log(validatedFuncionario);
             const funcionario = await createFunc(validatedFuncionario);
         
             if(!funcionario){
@@ -97,8 +94,7 @@ export class adminController{
 */
     public static async removeFunc(req: Request, res: Response):Promise<Response>{
         try{
-            const { email} = req.body.email;
-
+            const { email } = req.body;
             if(!email){
                 return res.status(404).json({error: 'email é obrigatório'});
             }
@@ -108,10 +104,11 @@ export class adminController{
             if(!hasDeleted){
                 return res.status(404).json({error: 'funcionario não encontrado'});
             }
-            return res.status(200).json("Funcionário removido com sucesso");
+            return res.status(200).json({message: 'Funcionário criado com sucesso'});
 
         }catch(error){
             return res.status(500).json({ error: 'Erro ao remover o funcionário' });
         }
     }
 }
+

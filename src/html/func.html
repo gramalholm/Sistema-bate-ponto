@@ -29,29 +29,31 @@
         </div>
        
         <div class="container-ex">
-            <h1>ALterando a senha</h1>
+            <h1>Alterando a senha</h1>
             <input class="login-input" type="password" placeholder="Nova Senha">
             <br></br>
             <input class="login-input" type="password" placeholder="Confirme a Senha">
             <br></br>
-            <a class="enviar button" href="./func.html" id="check-enviar">Enviar</a>
+            <button class="enviar button">Enviar</button>
         </div>
 
         <div class="container-ex">
             <h1>Realizando o check in</h1>
-            <div class="func-radio">
-                <input type="radio" name="check" value="1" id="checkin">
-                <label for="checkin">check in</label>
-            </div>
-            <div class="func-radio">
-                <input type="radio" name="check" value="0" id="checkout">
-                <label for="checkout">check out</label>
-            </div>
-            <br></br>
-            <a class="enviar button" href="./func.html" id="check-enviar">Enviar</a>
+            <form action="" id="formCheckin">
+                <div class="func-radio">
+                    <input type="radio" name="check" value="checkin" id="checkin">
+                    <label for="checkin">check in</label>
+                </div>
+                <div class="func-radio">
+                    <input type="radio" name="check" value="checkout" id="checkout">
+                    <label for="checkout">check out</label>
+                </div>
+                <br></br>
+                <button class="enviar button">Enviar</button>
+            </form>
         </div>
     </main>
-    <script type="module" src="../TS/func.js"></script>
+    <script type="module" src="../TS/func/func.js"></script>
 </body>
 </html>
 

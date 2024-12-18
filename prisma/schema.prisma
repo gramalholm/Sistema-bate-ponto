@@ -10,29 +10,22 @@ datasource db {
 model Funcionario {
   email        String      @id @map("_id")
   senha        String
-  name         String
+  name         String      @unique
   cargo        String
   Hora_chegada String?
   Hora_saida   String?
   Horas_totais String
-  registros    Registro[]
-  pontos       Ponto[]
+  pontosEmail  Ponto[]     @relation("FuncionarioByEmail")
+  pontosName   Ponto[]     @relation("FuncionarioByName")
 }
 
 model Ponto {
   codigo            String      @id @default(auto()) @map("_id") @db.ObjectId
   tipo              String
   horario           DateTime    @default(now())
-  funcionario       Funcionario @relation(fields: [funcionarioId], references: [email])
-  funcionarioId     String
-  registros         Registro[]  @relation("PontoToRegistro")
-}
 
-model Registro {
-  id                String      @id @default(auto()) @map("_id") @db.ObjectId
-  funcionario       Funcionario @relation(fields: [funcionarioEmail], references: [email])
-  ponto             Ponto       @relation("PontoToRegistro", fields: [pontoCod], references: [codigo])
+  funcionarioE      Funcionario @relation("FuncionarioByEmail", fields: [funcionarioEmail], references: [email])
   funcionarioEmail  String
-  pontoCod          String      @db.ObjectId
-  data              DateTime    @default(now())
+  funcionarioN      Funcionario @relation("FuncionarioByName", fields: [funcionarioNome], references: [name])
+  funcionarioNome   String
 }

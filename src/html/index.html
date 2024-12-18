@@ -44,7 +44,11 @@
             .then(response => response.json())
             .then(data => {
                 if (data.redirect) {
+                    console.log(data);
+                    localStorage.setItem("userEmail", data.email);
+                    localStorage.setItem("userNome", data.nome);
                     window.location.href = data.redirect;
+
                 } else if (data.error) {
                     alert(data.error); 
                 }
