@@ -7,7 +7,7 @@ export class pontoController{
         try{
             const {tipo, email, nome} = req.body;
             if(!tipo){
-                return res.status(404).json({error: 'Marque o tipo de ponto que você deseja executar.'});
+                return res.status(400).json({error: 'Marque o tipo de ponto que você deseja executar.'});
             }
         
             const Ponto = criarPontoComConexoes(email, nome, tipo);

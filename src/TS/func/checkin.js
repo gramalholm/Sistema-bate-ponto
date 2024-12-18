@@ -18,6 +18,7 @@ export function checkin() {
     document.getElementById('formCheckin').addEventListener('submit', function (event) {
         event.preventDefault();
         const tipoCheck = document.querySelector('input[name="check"]:checked').value;
+        console.log(tipoCheck)
         const userEmail = localStorage.getItem("userEmail");
         const userName = localStorage.getItem("userNome");
         fetch("http://localhost:3333/func/checkin", { 
@@ -32,7 +33,7 @@ export function checkin() {
         .then(response => response.json())
         .then(data => {
             if (data.message) {
-                resetContainers(funcContainerEx[1], funcContainer);
+                resetContainer(funcContainerEx[1], funcContainer);
                 alert('Ponto batido com sucesso!');
             } else if (data.error) {
                 alert('Erro ao bater o ponto');

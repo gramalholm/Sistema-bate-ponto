@@ -17,30 +17,37 @@ export function alterarSenha() {
 
     document.getElementById('formAlterar').addEventListener('submit', function (event) {
         event.preventDefault();
-        const tipoCheck = document.querySelector('input[name="check"]:checked').value;
         const userEmail = localStorage.getItem("userEmail");
-        const userName = localStorage.getItem("userNome");
-        fetch("http://localhost:3333/func/checkin", { 
-            method: "POST",
-            headers: { "Content-Type": "application/json" },
-            body: JSON.stringify({ 
-                tipo: tipoCheck,
-                email: userEmail,
-                nome: userName
-            }),
-        })
-        .then(response => response.json())
-        .then(data => {
-            if (data.message) {
-                resetContainers(funcContainerEx[1], funcContainer);
-                alert('Ponto batido com sucesso!');
-            } else if (data.error) {
-                alert('Erro ao bater o ponto');
-            }
-        })
-        .catch(error => {
-            console.error('Erro:', error);
-            alert('Erro ao realizar a requisição: ' + error.message);
-        });
+        const newSenha = document.getElementById('newSenha').value;
+        const conNewSenha = document.getElementById('conNewSenha').value;
+
+        if(newSenha === conNewSenha){
+            fetch("http://localhost:3333/func/func/:id", { 
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({ 
+                    user: userEmail,
+                    newPassword: newSenha
+                }),
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.message) {
+                    resetContainer(funcContainerEx[0], funcContainer);
+                    alert('Senha alterada com sucesso!');
+                } else if (data.error) {
+                    alert('Erro ao alterar senha');
+                }
+            })
+            .catch(error => {
+                console.error('Erro:', error);
+                alert('Erro ao realizar a requisição: ' + error.message);
+            });
+        }
+        else{
+            alert('As senhas digitadas, são diferentes.');
+        }
+
+        
     });
 }

@@ -24,7 +24,7 @@ export const changePassword = async(email:string, senha: string):Promise<Funcion
             senha: senha
         }
     })
-    return funcionario;
+    return updateFuncionario;
 }
 
 //getall funcionarios
