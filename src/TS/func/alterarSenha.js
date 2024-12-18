@@ -1,21 +1,21 @@
 import { toggleContainer, resetContainer } from '../Comuns/uiHandler.js';
 
-export function checkin() {
-    const checkButton = document.getElementById('check');
+export function alterarSenha() {
+    const senhaButton = document.getElementById('senha');
     const xButton = document.querySelectorAll('.close-btn');
     const funcContainerEx = document.querySelectorAll('.container-ex');
     const funcContainer = document.querySelector('.func-container');
 
-    xButton[1].addEventListener('click', () => {
-        resetContainer(funcContainerEx[1], funcContainer);
+    xButton[0].addEventListener('click', () => {
+        resetContainer(funcContainerEx[0], funcContainer);
     });
 
-    checkButton.addEventListener('click', () => {
-        toggleContainer(funcContainerEx[1], funcContainer);
+    senhaButton.addEventListener('click', () => {
+        toggleContainer(funcContainerEx[0], funcContainer);
     });
 
 
-    document.getElementById('formCheckin').addEventListener('submit', function (event) {
+    document.getElementById('formAlterar').addEventListener('submit', function (event) {
         event.preventDefault();
         const tipoCheck = document.querySelector('input[name="check"]:checked').value;
         const userEmail = localStorage.getItem("userEmail");

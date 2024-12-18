@@ -36,6 +36,33 @@ header a img {
     padding-left: 0;
 }
 
+.close-btn {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    width: 30px;
+    height: 30px;
+    background-color: var(--cor-1);
+    border: none;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: background 0.3s ease, transform 0.2s ease;
+}
+
+.close-btn:hover {
+    background-color: var(--cor-3); /* Efeito ao passar o mouse */
+    transform: scale(1.1); /* Aumenta um pouco o tamanho */
+}
+
+.close-btn svg {
+    width: 20px;
+    height: 20px;
+    stroke: white; /* Cor do ícone */
+}
+
 .container {
     position: absolute;
     top:50%;
