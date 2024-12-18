@@ -121,7 +121,7 @@ export const editFunc = async (email: string, campo: string, novoValor: string):
             throw new Error('Funcionário não consta no banco de dados');
         }
     
-        const camposValidos = ['nome', 'senha', 'email', 'Hora_chegada', 'Hora_saida', 'horas_totais'];
+        const camposValidos = ['name', 'senha', 'email', 'cargo', 'Hora_chegada', 'Hora_saida', 'Horas_totais'];
         
         if (!camposValidos.includes(campo)) {
             throw new Error('Campo inválido.');

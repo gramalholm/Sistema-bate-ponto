@@ -10,10 +10,10 @@ export async function criarPontoComConexoes(email: string, nome: string, tipo: s
         data: {
           tipo: tipo,
           funcionarioE: {
-            connect: { email }, // Conecta o funcionário pelo email
+            connect: { email },
           },
           funcionarioN: {
-            connect: { name: nome }, // Conecta o funcionário pelo nome
+            connect: { name: nome },
           },
         },
       });
