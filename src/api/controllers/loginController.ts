@@ -1,11 +1,10 @@
 import { getFuncbyid } from "../services/funcServices";
 import { Request,Response } from "express";
+import  jwt  from "jsonwebtoken";
 import { compare } from "bcrypt";
-import jwt from "jsonwebtoken";
-
+const JWT_SECRET = 'codigo';
 
 export class loginController {
-    
     public static async verifyLogin(req: Request, res: Response): Promise<Response | void> {
         try {
             const { email, senha } = req.body;
@@ -13,28 +12,20 @@ export class loginController {
             if (!email || !senha) {
                 return res.status(400).json({ error: 'Usuário e senha são obrigatórios.' });
             }
-    
+            
             const login = await getFuncbyid(email);
 
             if (!login) {
                 return res.status(404).json({ error: 'Usuário não encontrado.' });
             }
 
-            const isPasswordCorrect = await compare(senha, login.senha);
-
-            console.log(isPasswordCorrect);
-            console.log(login);
-
-            if(isPasswordCorrect){
-
-                const token = jwt.sign({ id: login.email }, process.env.JWT_SECRET as string, {expiresIn: '1d'});
-                
+            if(login.senha === senha){
                 if (login.cargo === "RH") {
-                    const token = jwt.sign({ id: login.email }, process.env.JWT_SECRET as string, {expiresIn: '1d'});
-                    return res.json({ redirect: "/src/html/admin.html", token });
+                    const token = jwt.sign({ id: login.email }, JWT_SECRET, {expiresIn: '6h'});
+                    return res.json({ redirect: "/src/html/admin.html", token, email, nome: login.name });
                 } else {
-                    const token = jwt.sign({ id: login.email }, process.env.JWT_SECRET as string, {expiresIn: '12h'});
-                    return res.json({ redirect: "/src/html/func.html", token });
+                    const token = jwt.sign({ id: login.email }, JWT_SECRET, {expiresIn: '2h'});
+                    return res.json({ redirect: "/src/html/func.html", token, email, nome: login.name });
                 }
             }
             else{

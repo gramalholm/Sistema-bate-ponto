@@ -4,6 +4,8 @@ export interface ponto{
     codigo: string;
     tipo: string;
     horario: Date;
-    funcionario: Funcionario;
-    funcionarioId: string;
+    funcionarioE: Funcionario;
+    funcionarioEmail: string;
+    funcionarioN: Funcionario;
+    funcionarioNome: string;
 }

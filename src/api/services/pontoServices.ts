@@ -1,6 +1,7 @@
 import { PrismaClient } from "@prisma/client";
 import { NotFoundException } from "../Exceptions/NotFoundException";
 import { Exception } from "../Exceptions/Exception";
+import { ponto } from "../../models/Ponto";
 
 export async function criarPontoComConexoes(email: string, nome: string, tipo: string) {
     const prisma = new PrismaClient();
@@ -25,7 +26,7 @@ export async function criarPontoComConexoes(email: string, nome: string, tipo: s
     }
 }
 
-export async function getAllPontos(dataInicio: Date, dataFinal: Date) {
+export async function getAllPontos(dataInicio: Date, dataFinal: Date): Promise<ponto[]> {
     const prisma = new PrismaClient();
     try {
         const pontos = await prisma.ponto.findMany({
@@ -39,8 +40,8 @@ export async function getAllPontos(dataInicio: Date, dataFinal: Date) {
               funcionarioE: true,
               funcionarioN: true,
             },
-        })
-        return pontos;
+    })
+    return pontos;
     } catch (error) {
         console.error("Erro ao buscar pontos:", error);
         throw error;

@@ -18,40 +18,55 @@
     </header>
     <main>
         <div class="func-container container">
-                <button class="func button" id="check">
-                    <img class="button-img func-tamanho-img" src="../../public/img/Icones/checkin.png" alt="Check in">
-                    <h1>check in</h1>
-                </button>
-                <button class="func button" id="senha">
-                    <img class="button-img func-tamanho-img" src="../../public/img/Icones/senha.png" alt="Alterar senha">
-                    <h1>Alterar senha</h1>
-                </button>
+            <button class="func button" id="check">
+                <img class="button-img func-tamanho-img" src="../../public/img/Icones/checkin.png" alt="Check in">
+                <h1>check in</h1>
+            </button>
+            <button class="func button" id="senha">
+                <img class="button-img func-tamanho-img" src="../../public/img/Icones/senha.png" alt="Alterar senha">
+                <h1>Alterar senha</h1>
+            </button>
         </div>
        
         <div class="container-ex">
-            <h1>ALterando a senha</h1>
-            <input class="login-input" type="password" placeholder="Nova Senha">
-            <br></br>
-            <input class="login-input" type="password" placeholder="Confirme a Senha">
-            <br></br>
-            <a class="enviar button" href="./func.html" id="check-enviar">Enviar</a>
+            <button class="close-btn">
+                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24">
+                    <path fill="white" d="M18 6L6 18M6 6l12 12" stroke="var(--cor-2)" stroke-width="2" stroke-linecap="round" />
+                </svg>
+            </button>
+            <h1>Alterando a senha</h1>
+            <form action="" id="formAlterar">
+                <input class="login-input" type="text" id="newSenha" placeholder="Nova Senha">
+                <br></br>
+                <input class="login-input" type="text" id="conNewSenha" placeholder="Confirme a Senha">
+                <br></br>
+                <button class="enviar button" type="submit">Enviar</button>
+            </form>
+            
         </div>
 
         <div class="container-ex">
+            <button class="close-btn">
+                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24">
+                    <path fill="white" d="M18 6L6 18M6 6l12 12" stroke="var(--cor-2)" stroke-width="2" stroke-linecap="round" />
+                </svg>
+            </button>
             <h1>Realizando o check in</h1>
-            <div class="func-radio">
-                <input type="radio" name="check" value="1" id="checkin">
-                <label for="checkin">check in</label>
-            </div>
-            <div class="func-radio">
-                <input type="radio" name="check" value="0" id="checkout">
-                <label for="checkout">check out</label>
-            </div>
-            <br></br>
-            <a class="enviar button" href="./func.html" id="check-enviar">Enviar</a>
+            <form action="" id="formCheckin">
+                <div class="func-radio">
+                    <input type="radio" name="check" value="checkin" id="checkin">
+                    <label for="checkin">check in</label>
+                </div>
+                <div class="func-radio">
+                    <input type="radio" name="check" value="checkout" id="checkout">
+                    <label for="checkout">check out</label>
+                </div>
+                <br></br>
+                <button class="enviar button">Enviar</button>
+            </form>
         </div>
     </main>
-    <script type="module" src="../TS/func.js"></script>
+    <script type="module" src="../TS/func/func.js"></script>
 </body>
 </html>
 

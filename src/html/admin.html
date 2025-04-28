@@ -36,50 +36,73 @@
             </button>
         </div>
         <div class="container-ex">
+            <button class="close-btn">
+                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24">
+                    <path fill="white" d="M18 6L6 18M6 6l12 12" stroke="var(--cor-2)" stroke-width="2" stroke-linecap="round" />
+                </svg>
+            </button>
             <h1>Deletar funcionario</h1>
-            <input class="login-input" type="text" placeholder="Email do funcionario">
-            <br></br>
-            <button class="enviar button">Deletar</button>
+            <form action="" id="formDelfunc">
+                <input class="login-input" type="text" id="emailDel" placeholder="Email do funcionario">
+                <br></br>
+                <button class="enviar button">Deletar</button>
+            </form>
         </div>
         <div class="container-ex">
+            <button class="close-btn">
+                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24">
+                    <path fill="white" d="M18 6L6 18M6 6l12 12" stroke="var(--cor-2)" stroke-width="2" stroke-linecap="round" />
+                </svg>
+            </button>
             <h1>Editar funcionario</h1>
-            <input class="login-input" type="text" placeholder="Email do funcionario">
-            <br></br>
-            <p>Marque o campo que deseja editar</p>
-            <div class="func-radio">
-                <input type="radio" name="campo" value="0" id="checkNome">
-                <label for="nome">Nome</label>
-            </div>
-            <div class="func-radio">
-                <input type="radio" name="campo" value="1" id="checkSenha">
-                <label for="senha">Senha</label>
-            </div>
-            <div class="func-radio">
-                <input type="radio" name="campo" value="2" id="checkEmail">
-                <label for="email">Email</label>
-            </div>
-            <div class="func-radio">
-                <input type="radio" name="campo" value="3" id="checkHorac">
-                <label for="horac">Hora de chegada</label>
-            </div>
-            <div class="func-radio">
-                <input type="radio" name="campo" value="4" id="checkHoras">
-                <label for="horas">Hora de saida</label>
-            </div>
-            <div class="func-radio">
-                <input type="radio" name="campo" value="5" id="checkHorast">
-                <label for="horast">Horas totais</label>
-            </div>
-            <br></br>
-            <button class="enviar button">Enviar</button>
+            <form action="" id="formEditfunc">
+                <input class="login-input" type="text" id="emailEdit" placeholder="Email do funcionario">
+                <br></br>
+                <p>Marque o campo que deseja editar</p>
+                <div class="func-radio">
+                    <input type="radio" name="campo" value="nome" id="checkNome">
+                    <label for="checkNome">Nome</label>
+                </div>
+                <div class="func-radio">
+                    <input type="radio" name="campo" value="senha" id="checkSenha">
+                    <label for="checkSenha">Senha</label>
+                </div>
+                <div class="func-radio">
+                    <input type="radio" name="campo" value="Hora_chegada" id="checkHorac">
+                    <label for="checkHorac">Hora de chegada</label>
+                </div>
+                <div class="func-radio">
+                    <input type="radio" name="campo" value="Hora_saida" id="checkHoras">
+                    <label for="checkHoras">Hora de saida</label>
+                </div>
+                <div class="func-radio">
+                    <input type="radio" name="campo" value="horas_totais" id="checkHorast">
+                    <label for="checkHorast">Horas totais</label>
+                </div>
+                <br></br>
+                <button class="enviar button">Enviar</button>
+            </form>
+            
         </div>
         <div class="container-ex">
+            <button class="close-btn">
+                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24">
+                    <path fill="white" d="M18 6L6 18M6 6l12 12" stroke="var(--cor-2)" stroke-width="2" stroke-linecap="round" />
+                </svg>
+            </button>
             <h1>Insira o novo dado</h1>
-            <input class="login-input" type="text" placeholder="Novo dado">
-            <br></br>
-            <button class="enviar button">Enviar</button>
+            <form action="" id="formEditfuncEsc">
+                <input class="login-input" type="text" id="editCampo" placeholder="Novo dado">
+                <br></br>
+                <button class="enviar button">Enviar</button>
+            </form>
         </div>
         <div class="container-ex">
+            <button class="close-btn">
+                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24">
+                    <path fill="white" d="M18 6L6 18M6 6l12 12" stroke="var(--cor-2)" stroke-width="2" stroke-linecap="round" />
+                </svg>
+            </button>
             <h1>Adicionar funcionario</h1>
             <form action="" id="formAddfunc">
                 <input class="login-input" type="text" id="nome" placeholder="Nome">
@@ -90,16 +113,17 @@
                 <br></br>
                 <input class="login-input" type="text" id="cargo" placeholder="Cargo">
                 <br></br>
-                <input class="login-input" type="text" id="hora_entrada" placeholder="Hora de entrada">
-                <br></br>
-                <input class="login-input" type="text" id="hora_saida" placeholder="Hora de saida">
-                <br></br>
                 <input class="login-input" type="text" id="horas_totais" placeholder="Horas totais">
                 <br></br>
                 <button class="enviar button" type="submit">Adicionar funcionario</button>
             </form>
         </div>
         <div class="container-ex">
+            <button class="close-btn">
+                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24">
+                    <path fill="white" d="M18 6L6 18M6 6l12 12" stroke="var(--cor-2)" stroke-width="2" stroke-linecap="round" />
+                </svg>
+            </button>
             <h1>Gerar Relatorio</h1>
             <div class="input-group">
                 <label for="data-inicio">Data de Inicio</label>

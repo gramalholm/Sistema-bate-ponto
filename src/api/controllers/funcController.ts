@@ -17,7 +17,7 @@ export class funcController{
                 return res.status(400).json({error: 'Funcionário não encontrado'});
             }
 
-            return res.status(200).json("Senha do funcionário alterada com sucesso");
+            return res.status(200).json({message: "Senha do funcionário alterada com sucesso"});
 
         }catch(error){
             return res.status(500).json({ error: 'Erro interno do servidor.' })

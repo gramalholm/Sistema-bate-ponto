@@ -3,12 +3,15 @@ import express, {Request, Response} from 'express';
 import { loginRouter } from '../routes/Routes';
 import { funcRouter } from '../routes/funcRoutes';
 import { adminRouter } from '../routes/adminRoutes';
+import { configurarAgendamentoRelatorio } from '../controllers/emailController';
 import './services/translationYup';
 
 // instanciando o servidor
 const app = express();
 app.use(express.static('public'));
 app.use(express.json());
+
+configurarAgendamentoRelatorio();
 
 app.use('/', loginRouter);
 app.use('/admin', adminRouter);

@@ -60,7 +60,7 @@ export class adminController{
             const dataInicial = req.body.dataInicial;
             const dataFinal = req.body.dataFinal;
 
-            const pontos: Ponto[] = await getAllPontos(dataFinal, dataInicial);
+            const pontos: ponto[] = await getAllPontos(dataFinal, dataInicial);
             if(!pontos){
                 return res.status(404).json({error: 'Dados dos pontos não encontrados'});
             }
@@ -74,6 +74,7 @@ export class adminController{
     public static async removeFunc(req: Request, res: Response):Promise<Response>{
         try{
             const { email } = req.body;
+
             if(!email){
                 return res.status(404).json({error: 'email é obrigatório'});
             }
@@ -83,6 +84,7 @@ export class adminController{
             if(!hasDeleted){
                 return res.status(404).json({error: 'funcionario não encontrado'});
             }
+            return res.status(200).json({message: 'Funcionário criado com sucesso'});
             return res.status(200).json({message: 'Funcionário criado com sucesso'});
 
         }catch(error){
@@ -131,6 +133,6 @@ export class adminController{
             return res.status(500).json({ error: 'Erro ao editar o funcionário' });
         }
     }
-    
 }
+
 

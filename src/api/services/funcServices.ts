@@ -1,7 +1,7 @@
 import { PrismaClient } from "@prisma/client";
 import { hash } from "bcrypt";
+import { ponto } from "../../models/Ponto";
 import { Funcionario} from "../../models/Funcionario";
-import { Ponto } from "../../models/Ponto";
 import { NotFoundException } from "../Exceptions/NotFoundException";
 import { Exception } from "../Exceptions/Exception";
 import { FuncionarioUpdatePswd } from "../../models/Interfaces/FuncionarioUpdatePswd";
@@ -128,6 +128,7 @@ export const editFunc = async (email: string, campo: string, novoValor: string):
         console.log("PrismaClient desconectado");
     }
 }
+
 export const createFunc = async(body: FuncionarioCreate):Promise<Funcionario> => {
     const prisma = new PrismaClient();
     console.log(body);
@@ -182,7 +183,7 @@ export async function checkIfEmailExists(email: string) {
     }
 }
 
-export const createCSV = async(pontos: Ponto[]) => {
+export const createCSV = async(pontos: ponto[]) => {
     const createCsvWriter = require('csv-writer').createObjectCsvWriter;
 
     const csvWriter = createCsvWriter({
